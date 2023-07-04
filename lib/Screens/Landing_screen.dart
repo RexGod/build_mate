@@ -45,9 +45,9 @@ class Landing extends StatelessWidget {
               ),
             ),
             Container(
+              margin: EdgeInsets.only(top: 100),
               width: 250,
               height: 45,
-              padding: const EdgeInsets.fromLTRB(85, 11, 85, 11),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: const Color.fromRGBO(64, 123, 255, 1),
@@ -57,10 +57,9 @@ class Landing extends StatelessWidget {
                 child: const Text(
                   'شروع کنید',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                  ),
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             )
