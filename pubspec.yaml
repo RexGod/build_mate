@@ -22,3 +22,4 @@ flutter:
   assets:
     - lib\assets\landing_illu.png
     - lib\assets\Logo.png
+    - lib\assets\Login.png

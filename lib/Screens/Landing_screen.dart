@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Login_screen.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
@@ -53,7 +55,9 @@ class Landing extends StatelessWidget {
                 color: const Color.fromRGBO(64, 123, 255, 1),
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, Login.route_name);
+                },
                 child: const Text(
                   'شروع کنید',
                   style: TextStyle(
