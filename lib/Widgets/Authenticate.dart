@@ -34,6 +34,27 @@ class Authenticate extends StatelessWidget {
                       )),
                 ],
               ),
+            ),
+            //it goes for Authentication code
+            Container(
+              width: 260,
+              height: 140,
+              color: Colors.grey,
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Container(
+                alignment: Alignment.center,
+                width: 118,
+                height: 32,
+                decoration: const BoxDecoration(color: Color(0xff407bff)),
+                child: const Text("تایید",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ),
             )
           ],
         ),
