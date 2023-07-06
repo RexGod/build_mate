@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
                         // Other form fields can be added here
                         PhoneNumberFormField(),
                         const SizedBox(
-                          height: 100,
+                          height: 50,
                         ),
                         Container(
                           width: 250,
@@ -86,11 +86,13 @@ class _LoginState extends State<Login> {
                           ),
                           child: TextButton(
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               setState(() {
                                 isVisible = true;
                                 setbackgroundColor =
                                     const Color.fromRGBO(242, 242, 242, 0.6);
-                                buttonColor = const Color.fromRGBO(64, 124, 255, 0.6);
+                                buttonColor =
+                                    const Color.fromRGBO(64, 124, 255, 0.6);
                               });
                             },
                             child: const Text(
