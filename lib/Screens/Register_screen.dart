@@ -24,7 +24,22 @@ class _RegisterState extends State<Register> {
     Provider.of<Auth>(context, listen: false)
         .register(_authData['email']!, _authData['password']!);
   }
+String? validateEmail(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your email';
+  }
 
+  // Regular expression pattern for email validation
+  final emailRegex = RegExp(
+    r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
+  );
+
+  if (!emailRegex.hasMatch(value)) {
+    return 'Please enter a valid email address';
+  }
+
+  return null; // Return null if the email is valid
+}
   bool isVisible = false;
   Color setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
   Color buttonColor = const Color.fromRGBO(64, 123, 255, 1);
@@ -135,14 +150,7 @@ class _RegisterState extends State<Register> {
                                               Radius.circular(5))),
                                       labelText: 'رمز عبور',
                                     ),
-                                    validator: (value) {
-                                      // Phone number validation logic goes here
-                                      if (value == null || value.isEmpty) {
-                                        return 'لطفا رمز عبور خود را وارد نمایید';
-                                      }
-                                      // You can add more specific validation rules if needed
-                                      return null;
-                                    },
+                                    validator: validateEmail,
                                     onSaved: (value) {
                                       _authData['password'] = value!;
                                     },

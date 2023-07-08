@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
         routes: {
           Landing.route_name: (context) => Landing(),
           Register.route_name: (context) => Register(),
-          //SignUp.route_name :(context) => SignUp()
+          
         },
       ),
     );
