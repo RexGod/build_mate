@@ -1,18 +1,21 @@
-import 'package:flutter/material.dart';
-import '../Widgets/PhoneFormField.dart';
+/* import 'package:flutter/material.dart';
 import '../Widgets/Authenticate.dart';
-
-class Login extends StatefulWidget {
+import '../Widgets/SignUpFormField.dart';
+import './../Provider/Auth_managers.dart';
+import 'package:provider/provider.dart';
+class SignUp extends StatefulWidget {
   final _formKey = GlobalKey<FormState>();
 
   // ignore: constant_identifier_names
-  static const route_name = '/login';
+  static const route_name = '/signup';
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
+  
+  
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   bool isVisible = false;
   Color setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
   Color buttonColor = const Color.fromRGBO(64, 123, 255, 1);
@@ -73,7 +76,7 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: [
                         // Other form fields can be added here
-                        PhoneNumberFormField(),
+                        SignUpFormField(),
                         const SizedBox(
                           height: 50,
                         ),
@@ -85,7 +88,9 @@ class _LoginState extends State<Login> {
                             color: buttonColor,
                           ),
                           child: TextButton(
+
                             onPressed: () {
+
                               FocusScope.of(context).unfocus();
                               setState(() {
                                 isVisible = true;
@@ -94,9 +99,10 @@ class _LoginState extends State<Login> {
                                 buttonColor =
                                     const Color.fromRGBO(64, 124, 255, 0.6);
                               });
+                              Provider.of<Auth>(context).
                             },
                             child: const Text(
-                              'وارد شوید',
+                              'ثبت نام',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -123,3 +129,4 @@ class _LoginState extends State<Login> {
     );
   }
 }
+ */

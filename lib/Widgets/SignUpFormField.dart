@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
-class PhoneNumberFormField extends StatefulWidget {
+class SignUpFormField extends StatefulWidget {
   @override
-  _PhoneNumberFormFieldState createState() => _PhoneNumberFormFieldState();
+  _SignUpFormFieldState createState() => _SignUpFormFieldState();
 }
 
-class _PhoneNumberFormFieldState extends State<PhoneNumberFormField> {
+class _SignUpFormFieldState extends State<SignUpFormField> {
   final TextEditingController _namecontroller = TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
   @override
@@ -14,6 +14,8 @@ class _PhoneNumberFormFieldState extends State<PhoneNumberFormField> {
     _phonecontroller.dispose();
     super.dispose();
   }
+
+  final Map<String, String> _authData = {'name': '', 'phone': ''}; 
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +43,20 @@ class _PhoneNumberFormFieldState extends State<PhoneNumberFormField> {
                   // You can add more specific validation rules if needed
                   return null;
                 },
+                onSaved: (value){
+                  _authData['name'] = value!;
+                },
                 onChanged: (value) {
                   // Phone number formatting logic goes here (if needed)
                   // For example, you can format the phone number as the user types it
                 },
+                
               ),
               const SizedBox(
                 height: 30,
               ),
               TextFormField(
+                
                 controller: _phonecontroller,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -67,13 +74,18 @@ class _PhoneNumberFormFieldState extends State<PhoneNumberFormField> {
                   // You can add more specific validation rules if needed
                   return null;
                 },
+                onSaved: (value){
+                  _authData['phone'] = value!;
+                },
                 onChanged: (value) {
                   // Phone number formatting logic goes here (if needed)
                   // For example, you can format the phone number as the user types it
                 },
+              
               ),
             ],
           )),
     );
   }
 }
+ */
