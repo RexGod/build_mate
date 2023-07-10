@@ -16,13 +16,34 @@ class _RegisterState extends State<Register> {
   final TextEditingController _passwordcontroller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   final Map<String, String> _authData = {'email': '', 'password': ''};
+  bool isVisible = false;
+  bool isRegistered = false;
+  bool isSignedUp = false; // Track signUp status
+
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     _formKey.currentState!.save();
-    Provider.of<Auth>(context, listen: false)
-        .register(_authData['email']!, _authData['password']!);
+    final isemailExist = Provider.of<Auth>(context, listen: false)
+        .isEmailInList(_authData['email']!);
+
+    if (await isemailExist) {
+      isVisible = false;
+      Provider.of<Auth>(context, listen: false)
+          .login(_authData['email']!, _authData['password']!);
+    } else {
+      isVisible = true;
+      isRegistered = true;
+      Provider.of<Auth>(context, listen: false)
+          .register(_authData['email']!, _authData['password']!);
+      setState(() {
+        isSignedUp = true; // Set isSignedUp to true when signUp is successful
+      });
+    }
+
+    _emailcontroller.clear();
+    _passwordcontroller.clear();
   }
 
   String? validateEmail(String? value) {
@@ -46,7 +67,6 @@ class _RegisterState extends State<Register> {
     if (value == null || value.isEmpty) {
       return 'Please enter a password';
     }
-
     if (value.length < 8) {
       return 'Password must be at least 8 characters long';
     }
@@ -70,10 +90,8 @@ class _RegisterState extends State<Register> {
     return null; // Return null if the password is valid
   }
 
-  bool isVisible = false;
   Color setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
   Color buttonColor = const Color.fromRGBO(64, 123, 255, 1);
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -134,56 +152,55 @@ class _RegisterState extends State<Register> {
                         Container(
                           width: 300,
                           child: Align(
-                              alignment: AlignmentDirectional.centerEnd,
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: _emailcontroller,
-                                    keyboardType: TextInputType.emailAddress,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              strokeAlign: BorderSide
-                                                  .strokeAlignOutside),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                      labelText: 'ایمیل',
-                                    ),
-                                    validator: validateEmail,
-                                    onSaved: (value) {
-                                      _authData['email'] = value!;
-                                    },
-                                    onChanged: (value) {
-                                      // Phone number formatting logic goes here (if needed)
-                                      // For example, you can format the phone number as the user types it
-                                    },
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  controller: _emailcontroller,
+                                  onEditingComplete: _submit,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            strokeAlign:
+                                                BorderSide.strokeAlignOutside),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    labelText: 'ایمیل',
                                   ),
-                                  const SizedBox(
-                                    height: 20,
+                                  validator: validateEmail,
+                                  onSaved: (value) {
+                                    _authData['email'] = value!;
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: _passwordcontroller,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  onEditingComplete: _submit,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            strokeAlign:
+                                                BorderSide.strokeAlignOutside),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    labelText: 'رمز عبور',
                                   ),
-                                  TextFormField(
-                                    controller: _passwordcontroller,
-                                    keyboardType: TextInputType.visiblePassword,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              strokeAlign: BorderSide
-                                                  .strokeAlignOutside),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                      labelText: 'رمز عبور',
-                                    ),
-                                    validator: validatePassword,
-                                    onSaved: (value) {
-                                      _authData['password'] = value!;
-                                    },
-                                    onChanged: (value) {
-                                      // Phone number formatting logic goes here (if needed)
-                                      // For example, you can format the phone number as the user types it
-                                    },
-                                  ),
-                                ],
-                              )),
+                                  validator: validatePassword,
+                                  onSaved: (value) {
+                                    _authData['password'] = value!;
+                                  },
+                                  onChanged: (value) {
+                                    // Phone number formatting logic goes here (if needed)
+                                    // For example, you can format the phone number as the user types it
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           height: 50,
@@ -200,21 +217,20 @@ class _RegisterState extends State<Register> {
                               _submit();
                               FocusScope.of(context).unfocus();
                               setState(() {
-                                isVisible = true;
+                                isVisible = isVisible;
                                 setbackgroundColor =
                                     const Color.fromRGBO(242, 242, 242, 0.6);
                                 buttonColor =
                                     const Color.fromRGBO(64, 124, 255, 0.6);
                               });
-
-                              //Provider.of<Auth>(context , listen: false).register();
                             },
                             child: const Text(
                               'وارد شوید',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700),
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         )
@@ -225,7 +241,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             Visibility(
-              visible: isVisible,
+              visible: isSignedUp, // Show the widget only if isSignedUp is true
               child: Container(
                 child: Authenticate(),
                 alignment: Alignment.center,
