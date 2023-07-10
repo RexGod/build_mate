@@ -1,26 +1,27 @@
-/* import 'package:build_mate/Screens/Building_screen.dart';
 import 'package:flutter/material.dart';
-import '../Provider/Auth_managers.dart';
-import '../Widgets/Authenticate.dart';
 import 'package:provider/provider.dart';
+import '../Settings/Validator.dart';
+import '../Provider/Auth_managers.dart';
+import 'Building_screen.dart';
+import 'SignUp.dart';
 
-class Register extends StatefulWidget {
-  // ignore: constant_identifier_names
-  static const route_name = '/Register';
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+
+  static const route_name = '/login';
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
+class _LoginState extends State<Login> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey();
   final Map<String, String> _authData = {'email': '', 'password': ''};
-  bool isVisible = false;
-  bool isRegistered = false;
-  bool isSignedUp = false;
-  bool isLogined = false;
+
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  Color setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
+  Color buttonColor = const Color.fromRGBO(64, 123, 255, 1);
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -28,81 +29,25 @@ class _RegisterState extends State<Register> {
     _formKey.currentState!.save();
     final isemailExist = Provider.of<Auth>(context, listen: false)
         .isEmailInList(_authData['email']!);
-
     if (await isemailExist) {
-      isVisible = false;
       Provider.of<Auth>(context, listen: false)
           .login(_authData['email']!, _authData['password']!);
-    } else {
-      isVisible = true;
-      isRegistered = true;
-      Provider.of<Auth>(context, listen: false)
-          .register(_authData['email']!, _authData['password']!);
-      setState(() {
-        isSignedUp = true;
-      });
-    }
+      //Navigator.pushReplacementNamed(context, Building.route_name);
+    } else {}
 
     /* _emailcontroller.clear();
     _passwordcontroller.clear(); */
   }
 
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-
-    // Regular expression pattern for email validation
-    final emailRegex = RegExp(
-      r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
-    );
-
-    if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email address';
-    }
-
-    return null; // Return null if the email is valid
-  }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a password';
-    }
-    if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
-    }
-
-    if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
-    }
-
-    if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
-    }
-
-    if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number';
-    }
-
-    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
-    }
-
-    return null; // Return null if the password is valid
-  }
-
-  Color setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
-  Color buttonColor = const Color.fromRGBO(64, 123, 255, 1);
   @override
   Widget build(BuildContext context) {
+    final validpass = Provider.of<Setting>(context).validatePassword;
+    final validemail = Provider.of<Setting>(context).validateEmail;
     return SafeArea(
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
           setState(() {
-            isVisible = false;
-            isRegistered = false;
-            isSignedUp = false;
             setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
             buttonColor = const Color.fromRGBO(64, 123, 255, 1);
           });
@@ -171,7 +116,7 @@ class _RegisterState extends State<Register> {
                                             Radius.circular(5))),
                                     labelText: 'ایمیل',
                                   ),
-                                  validator: validateEmail,
+                                  validator: validemail,
                                   onSaved: (value) {
                                     _authData['email'] = value!;
                                   },
@@ -192,7 +137,7 @@ class _RegisterState extends State<Register> {
                                             Radius.circular(5))),
                                     labelText: 'رمز عبور',
                                   ),
-                                  validator: validatePassword,
+                                  validator: validpass,
                                   onSaved: (value) {
                                     _authData['password'] = value!;
                                   },
@@ -219,7 +164,7 @@ class _RegisterState extends State<Register> {
                             onPressed: () {
                               _submit();
                               FocusScope.of(context).unfocus();
-                              Navigator.pushNamed(context, Building.route_name);
+                              //Navigator.pushNamed(context, Building.route_name);
                             },
                             child: const Text(
                               'وارد شوید',
@@ -230,18 +175,24 @@ class _RegisterState extends State<Register> {
                               ),
                             ),
                           ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              child: const Text('وارد شوید'),
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, SignUp.route_name);
+                              },
+                            ),
+                            const Text('اکانت ندارید ؟ '),
+                          ],
                         )
                       ],
                     ),
                   ),
                 ],
-              ),
-            ),
-            Visibility(
-              visible: isSignedUp, // Show the widget only if isSignedUp is true
-              child: Container(
-                child: Authenticate(),
-                alignment: Alignment.center,
               ),
             ),
           ]),
@@ -250,4 +201,3 @@ class _RegisterState extends State<Register> {
     );
   }
 }
- */

@@ -7,11 +7,12 @@ class Auth with ChangeNotifier {
   late DateTime _expier;
   late String _userId;
   late String _password;
+  late String _status;
   SupabaseClient supabase = SupabaseClient(
       'https://vzlhnipbllxwusreekcb.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bGhuaXBibGx4d3VzcmVla2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzY5NTYsImV4cCI6MTk5NzkxMjk1Nn0.Sn9FWq3SB_wwV76niREsmrL9bBDzEsEPusVW-9TG3So');
 
-  Future<void> register(String email, String password) async {
+  Future<void> register(String email, String password , String name) async {
     try {
       final response = await supabase.auth.signUp(
         email: email,
@@ -19,11 +20,21 @@ class Auth with ChangeNotifier {
       );
       //_password = password;
       _userId = response.user!.id;
-      await supabase
-          .from('Users')
-          .insert({'id': _userId, 'email': email, 'password': password});
+
+      await supabase.from('Users').insert({
+        'id': _userId,
+        'email': email,
+        'password': password,
+        'name': name
+      });
       print('success registration');
     } catch (error) {
+      if ('Connection reset by peer' == error.toString()) {
+        final response = await supabase.auth.signUp(
+          email: email,
+          password: password,
+        );
+      }
       // Handle other exceptions
       print('Error during registration: $error');
     }
@@ -47,7 +58,7 @@ class Auth with ChangeNotifier {
         email: email,
         password: password,
       );
-
+      _status = response.user!.emailConfirmedAt!;
       print('success Login');
     } catch (e) {
       // Handle other exceptions
@@ -57,7 +68,7 @@ class Auth with ChangeNotifier {
           password: password,
         );
       }
-      ;
+
       print('Error during login: $e');
     }
   }
