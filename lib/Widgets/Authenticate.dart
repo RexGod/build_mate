@@ -26,8 +26,7 @@ class Authenticate extends StatelessWidget {
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                           ))),
-                  const Text(
-                      "لطفا کد ارسال شده به شماره وارد شده را وارد نمایید",
+                  const Text("لطفا ایمیل خود را تایید کنید",
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
