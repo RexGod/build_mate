@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Screens/Building_screen.dart';
 import 'Screens/Landing_screen.dart';
-import 'Screens/Register_screen.dart';
 import 'Provider/Auth_managers.dart';
 import 'Screens/SignUp.dart';
 import 'Screens/login_screen.dart';

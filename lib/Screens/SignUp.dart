@@ -74,13 +74,12 @@ class _SignUpState extends State<SignUp> {
                         width: 100,
                       ),
                       SizedBox(
-                        height: 50,
-                        width: 50,
+                        height: 80,
+                        width: 80,
                         child: Image.asset(
                           'lib/assets/Logo.png',
-                          color: Color(Color.getAlphaFromOpacity(0.5)),
-                          height: 50,
-                          width: 50,
+                          height: 80,
+                          width: 80,
                         ),
                       ),
                     ],

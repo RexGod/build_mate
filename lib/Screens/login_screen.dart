@@ -54,11 +54,12 @@ class _LoginState extends State<Login> {
         },
         child: Scaffold(
           backgroundColor: setbackgroundColor,
-          body: Stack(children: [
-            SingleChildScrollView(
+          body: SafeArea(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
                           onPressed: () {
@@ -73,7 +74,6 @@ class _LoginState extends State<Login> {
                         width: 80,
                         child: Image.asset(
                           'lib/assets/Logo.png',
-                          color: Color(Color.getAlphaFromOpacity(0.5)),
                           height: 80,
                           width: 80,
                         ),
@@ -195,7 +195,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-          ]),
+          ),
         ),
       ),
     );

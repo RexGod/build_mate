@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'Register_screen.dart';
 import 'login_screen.dart';
 
 class Landing extends StatelessWidget {
