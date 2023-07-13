@@ -22,6 +22,7 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   Color setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
   Color buttonColor = const Color.fromRGBO(64, 123, 255, 1);
+  bool isLoading = false;
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -29,9 +30,16 @@ class _LoginState extends State<Login> {
     _formKey.currentState!.save();
     final isemailExist = Provider.of<Auth>(context, listen: false)
         .isEmailInList(_authData['email']!);
+
     if (await isemailExist) {
+      setState(() {
+        isLoading = true; // Show loading state
+      });
       Provider.of<Auth>(context, listen: false)
           .login(_authData['email']!, _authData['password']!);
+      setState(() {
+        isLoading = false; // Hide loading state
+      });
       //Navigator.pushReplacementNamed(context, Building.route_name);
     } else {}
 
@@ -161,10 +169,28 @@ class _LoginState extends State<Login> {
                             color: buttonColor,
                           ),
                           child: TextButton(
-                            onPressed: () {
-                              _submit();
-                              FocusScope.of(context).unfocus();
+                            onPressed: () async {
+                              try {
+                                setState(() {
+                                  isLoading = true;
+                                });
+
+                                await _submit();
+
+                                Navigator.pushReplacementNamed(
+                                    context, Building.route_name);
+                                FocusScope.of(context).unfocus();
+                              } catch (e) {
+                                print(e);
+                              } finally {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+
                               //Navigator.pushNamed(context, Building.route_name);
+
+                              //
                             },
                             child: const Text(
                               'وارد شوید',

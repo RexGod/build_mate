@@ -6,6 +6,32 @@ class Building extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+        body: SafeArea(
+      child: Column(children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.arrow_back)),
+            const SizedBox(
+              width: 100,
+            ),
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: Image.asset(
+                'lib/assets/Logo.png',
+                height: 80,
+                width: 80,
+              ),
+            ),
+          ],
+        ),
+      ]),
+    ));
   }
 }
