@@ -1,3 +1,4 @@
+import 'package:build_mate/Provider/Residence_provider.dart';
 import 'package:build_mate/Settings/Validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +18,11 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: Auth()),
-        ChangeNotifierProvider.value(value: Setting())
+        ChangeNotifierProvider.value(value: Setting()),
+        ChangeNotifierProvider.value(value: ResidenceProvide())
       ],
       child: MaterialApp(
-        home: Landing(),
+        home: Building(),
         routes: {
           Landing.route_name: (context) => Landing(),
           Login.route_name: (context) => Login(),
