@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Widgets/Residence.dart';
+import 'package:ionicons/ionicons.dart';
 
 class Building extends StatelessWidget {
   Building({super.key});
@@ -49,12 +50,18 @@ class Building extends StatelessWidget {
           backgroundColor: Color.fromRGBO(64, 123, 255, 1),
           items: [
             BottomNavigationBarItem(
-                label: 'Text',
+                label: 'صورت حساب',
                 icon: Icon(
-                  Icons.add_alarm,
+                  Icons.notes,
                   color: Colors.white,
                 )),
-            BottomNavigationBarItem(label: 'Text', icon: Icon(Icons.add_alarm))
+            BottomNavigationBarItem(
+                label: 'ساکنین',
+                icon: Icon(
+                  Ionicons.home,
+                  color: Colors.white,
+                )),
+            BottomNavigationBarItem(label: 'هزینه ها', icon: Icon(Icons.money)),
           ]),
     );
   }
