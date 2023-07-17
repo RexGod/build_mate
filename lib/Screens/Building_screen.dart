@@ -1,54 +1,40 @@
 import 'package:flutter/material.dart';
-
+import 'Bill.dart';
+import 'Costs.dart';
 import '../Widgets/Residence.dart';
 import 'package:ionicons/ionicons.dart';
 
-class Building extends StatelessWidget {
+import 'Unit.dart';
+
+class Building extends StatefulWidget {
   Building({super.key});
   static const route_name = '/building_screen';
 
   @override
+  State<Building> createState() => _BuildingState();
+}
+
+class _BuildingState extends State<Building> {
+  final List<Widget> _pages = const [
+    Bill(),
+    Unit(),
+    Cost(),
+  ];
+  int currentIndex = 1;
+  void onTabTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.arrow_back)),
-              const SizedBox(
-                width: 100,
-              ),
-              SizedBox(
-                height: 80,
-                width: 80,
-                child: Image.asset(
-                  'lib/assets/Logo.png',
-                  height: 80,
-                  width: 80,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Expanded(child: ResidenceList()),
-
-          //BottomNavigationBar(items: )
-        ]),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
+      body: _pages[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped,
           backgroundColor: Color.fromRGBO(64, 123, 255, 1),
-          items: [
+          items: const [
             BottomNavigationBarItem(
                 label: 'صورت حساب',
                 icon: Icon(

@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Settings/Validator.dart';
-import '../Provider/Auth_managers.dart';
-import 'Building_screen.dart';
-import 'SignUp.dart';
+import '../../Settings/Validator.dart';
+import '../../Settings/Validator.dart';
+import '../../Provider/Auth_managers.dart';
+import 'login_screen.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
-  static const route_name = '/login';
+  static const route_name = '/signup';
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
-  final Map<String, String> _authData = {'email': '', 'password': ''};
+  final TextEditingController _namecontroller = TextEditingController();
+  final Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+    'name': ''
+  };
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   Color setbackgroundColor = const Color.fromRGBO(242, 242, 242, 1);
   Color buttonColor = const Color.fromRGBO(64, 123, 255, 1);
-  bool isLoading = false;
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -30,18 +34,12 @@ class _LoginState extends State<Login> {
     _formKey.currentState!.save();
     final isemailExist = Provider.of<Auth>(context, listen: false)
         .isEmailInList(_authData['email']!);
-
     if (await isemailExist) {
-      setState(() {
-        isLoading = true; // Show loading state
-      });
-      Provider.of<Auth>(context, listen: false)
-          .login(_authData['email']!, _authData['password']!);
-      setState(() {
-        isLoading = false; // Hide loading state
-      });
       //Navigator.pushReplacementNamed(context, Building.route_name);
-    } else {}
+    } else {
+      Provider.of<Auth>(context, listen: false).register(
+          _authData['email']!, _authData['password']!, _authData['name']!);
+    }
 
     /* _emailcontroller.clear();
     _passwordcontroller.clear(); */
@@ -62,12 +60,11 @@ class _LoginState extends State<Login> {
         },
         child: Scaffold(
           backgroundColor: setbackgroundColor,
-          body: SafeArea(
-            child: SingleChildScrollView(
+          body: Stack(children: [
+            SingleChildScrollView(
               child: Column(
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
                           onPressed: () {
@@ -89,16 +86,16 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                   SizedBox(
-                    height: 300,
-                    width: 300,
+                    height: 280,
+                    width: 280,
                     child: Image.asset(
                       'lib/assets/Login.png',
-                      height: 300,
-                      width: 300,
+                      height: 280,
+                      width: 280,
                     ),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   Form(
                     key: _formKey,
@@ -111,6 +108,30 @@ class _LoginState extends State<Login> {
                             alignment: AlignmentDirectional.centerEnd,
                             child: Column(
                               children: [
+                                TextFormField(
+                                  controller: _namecontroller,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  onEditingComplete: _submit,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            strokeAlign:
+                                                BorderSide.strokeAlignOutside),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    labelText: 'نام',
+                                  ),
+                                  onSaved: (value) {
+                                    _authData['name'] = value!;
+                                  },
+                                  onChanged: (value) {
+                                    // Phone number formatting logic goes here (if needed)
+                                    // For example, you can format the phone number as the user types it
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
                                 TextFormField(
                                   controller: _emailcontroller,
                                   onEditingComplete: _submit,
@@ -169,31 +190,13 @@ class _LoginState extends State<Login> {
                             color: buttonColor,
                           ),
                           child: TextButton(
-                            onPressed: () async {
-                              try {
-                                setState(() {
-                                  isLoading = true;
-                                });
-
-                                await _submit();
-
-                                Navigator.pushReplacementNamed(
-                                    context, Building.route_name);
-                                FocusScope.of(context).unfocus();
-                              } catch (e) {
-                                print(e);
-                              } finally {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-
+                            onPressed: () {
+                              _submit();
+                              FocusScope.of(context).unfocus();
                               //Navigator.pushNamed(context, Building.route_name);
-
-                              //
                             },
                             child: const Text(
-                              'وارد شوید',
+                              'ثبت نام',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -209,10 +212,10 @@ class _LoginState extends State<Login> {
                               child: const Text('وارد شوید'),
                               onPressed: () {
                                 Navigator.pushReplacementNamed(
-                                    context, SignUp.route_name);
+                                    context, Login.route_name);
                               },
                             ),
-                            const Text('اکانت ندارید ؟ '),
+                            const Text('اکانت دارید ؟ '),
                           ],
                         )
                       ],
@@ -221,7 +224,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-          ),
+          ]),
         ),
       ),
     );
