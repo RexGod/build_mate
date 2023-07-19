@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: Auth()),
         ChangeNotifierProvider.value(value: Setting()),
-        ChangeNotifierProvider.value(value: ResidenceProvide())
+        ChangeNotifierProvider.value(value: ResidenceProvider())
       ],
       child: MaterialApp(
         home: Building(),
