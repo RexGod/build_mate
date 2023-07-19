@@ -37,7 +37,7 @@ class Unit extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Expanded(
+            const Expanded(
               child: ResidenceList(),
             ),
           ],
