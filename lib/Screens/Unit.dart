@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import '../Widgets/Residence.dart';
 import '../Widgets/ResidenceForm.dart';
+import 'package:provider/provider.dart';
+import '../Provider/Residence_provider.dart';
 
 class Unit extends StatelessWidget {
   const Unit({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final residenceData = Provider.of<ResidenceProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -23,9 +26,17 @@ class Unit extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const Expanded(
-              child: ResidenceList(),
-            ),
+            ListView.builder(
+                itemCount: residenceData.residenceList.length,
+                itemBuilder: (context, index) {
+                  ResidenceList(
+                    id: residenceData.residenceList[index].id,
+                    block: residenceData.residenceList[index].block,
+                    floor: residenceData.residenceList[index].floor,
+                    name: residenceData.residenceList[index].name,
+                    unit: residenceData.residenceList[index].unit,
+                  );
+                })
           ],
         ),
       ),
