@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import '../Provider/Residence_provider.dart' as resModel;
 
 class ResidenceForm extends StatelessWidget {
-  const ResidenceForm({Key? key}) : super(key: key);
-
+  ResidenceForm({Key? key}) : super(key: key);
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _blockController = TextEditingController();
+  final TextEditingController _unitController = TextEditingController();
+  final TextEditingController _floorController = TextEditingController();
+  final TextEditingController _parkingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -21,6 +27,7 @@ class ResidenceForm extends StatelessWidget {
               ),
               TextFormField(
                 keyboardType: TextInputType.name,
+                controller: _nameController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: BorderSide(width: 1.0),
@@ -37,6 +44,7 @@ class ResidenceForm extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      controller: _unitController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
@@ -51,6 +59,7 @@ class ResidenceForm extends StatelessWidget {
                   ),
                   Expanded(
                     child: TextFormField(
+                      controller: _floorController,
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
@@ -65,6 +74,7 @@ class ResidenceForm extends StatelessWidget {
                   ),
                   Expanded(
                     child: TextFormField(
+                      controller: _blockController,
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
@@ -85,6 +95,7 @@ class ResidenceForm extends StatelessWidget {
                       width: MediaQuery.of(context).size.width *
                           0.4, // Set the desired width
                       child: TextFormField(
+                        controller: _parkingController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -99,6 +110,7 @@ class ResidenceForm extends StatelessWidget {
               const SizedBox(height: 15),
               TextFormField(
                 keyboardType: TextInputType.number,
+                controller: _phoneController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: BorderSide(width: 1.0),
@@ -108,7 +120,9 @@ class ResidenceForm extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    
+                  },
                   child: Container(
                     height: 45,
                     width: 250,
