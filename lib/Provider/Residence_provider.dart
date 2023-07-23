@@ -31,18 +31,16 @@ class ResidenceProvider extends ChangeNotifier {
   SupabaseClient supabase = SupabaseClient(
       'https://vzlhnipbllxwusreekcb.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bGhuaXBibGx4d3VzcmVla2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzY5NTYsImV4cCI6MTk5NzkxMjk1Nn0.Sn9FWq3SB_wwV76niREsmrL9bBDzEsEPusVW-9TG3So');
-
-  List<ResidenceModel> get residenceList => [..._residenceList];
-  List<ResidenceModel> _residenceList = [];
+  List<ResidenceModel> _residencegp = [];
+  List<ResidenceModel> get residencegp => [..._residencegp];
 
   Future<void> addResidence(String name, String block, String unit,
       String phone, String floor, String parking) async {
     try {
       var uuid = Uuid();
 
-      // Generate a v1 (time-based) id
-      var iduuid = uuid.v1();
-      var id = iduuid;
+      var id = uuid.v1();
+
       final response = await supabase.from('residence').insert({
         'id': id,
         'block': block,
@@ -61,11 +59,38 @@ class ResidenceProvider extends ChangeNotifier {
             block: block,
             parking_numbers: parking,
             phone: phone);
-        residenceList.add(newresidence);
-        notifyListeners();
+        residencegp.add(newresidence);
       });
     } catch (e) {
       print(e.toString());
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchResidences() async {
+    try {
+      final response = await supabase.from('residence').select(
+          '''name_of_Owner , block , unit , phone_number , number_of_parking , floor , id''');
+
+      _residencegp.clear();
+
+      final residenceList = response as List<dynamic>;
+      for (var residenceData in residenceList) {
+        final newresidence = ResidenceModel(
+          id: residenceData['id'].toString(),
+          name: residenceData['name_of_Owner'].toString(),
+          unit: residenceData['unit'].toString(),
+          floor: residenceData['floor'].toString(),
+          block: residenceData['block'].toString(),
+          parking_numbers: residenceData['number_of_parking'].toString(),
+          phone: residenceData['phone_number'].toString(),
+        );
+        _residencegp.add(newresidence);
+      }
+
+      notifyListeners();
+    } catch (e) {
+      print('Error: $e');
     }
   }
 }

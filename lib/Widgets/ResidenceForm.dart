@@ -31,12 +31,13 @@ class _ResidenceFormState extends State<ResidenceForm> {
       _formKey.currentState!.save();
       Provider.of<resModel.ResidenceProvider>(context, listen: false)
           .addResidence(
-              _nameController.text,
-              _floorController.text,
-              _blockController.text,
-              _unitController.text,
-              _parkingController.text,
-              _phoneController.text);
+        _nameController.text,
+        _blockController.text,
+        _unitController.text,
+        _phoneController.text,
+        _floorController.text,
+        _parkingController.text,
+      );
     }
   }
 
