@@ -4,12 +4,24 @@ import '../Widgets/ResidenceForm.dart';
 import 'package:provider/provider.dart';
 import '../Provider/Residence_provider.dart';
 
-class Unit extends StatelessWidget {
+class Unit extends StatefulWidget {
   const Unit({Key? key}) : super(key: key);
+
+  @override
+  State<Unit> createState() => _UnitState();
+}
+
+class _UnitState extends State<Unit> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ResidenceProvider>(context, listen: false).fetchResidences();
+  }
 
   @override
   Widget build(BuildContext context) {
     final residenceData = Provider.of<ResidenceProvider>(context);
+    final data = Provider.of<ResidenceProvider>(context).fetchResidences();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -26,18 +38,16 @@ class Unit extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Expanded(
+            Flexible(
               child: ListView.builder(
-                  itemCount: residenceData.residenceList.length,
-                  itemBuilder: (context, index) {
-                    ResidenceList(
-                      id: residenceData.residenceList[index].id,
-                      block: residenceData.residenceList[index].block,
-                      floor: residenceData.residenceList[index].floor,
-                      name: residenceData.residenceList[index].name,
-                      unit: residenceData.residenceList[index].unit,
-                    );
-                  }),
+                  itemCount: residenceData.residencegp.length,
+                  itemBuilder: (context, index) => ResidenceList(
+                        id: residenceData.residencegp[index].id,
+                        name: residenceData.residencegp[index].name,
+                        floor: residenceData.residencegp[index].floor,
+                        block: residenceData.residencegp[index].block,
+                        unit: residenceData.residencegp[index].unit,
+                      )),
             )
           ],
         ),
