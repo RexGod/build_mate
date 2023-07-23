@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ResidenceList extends StatelessWidget {
-  ResidenceList(
-      {Key? key,
-      required this.id,
-      required this.name,
-      required this.floor,
-      required this.block,
-      required this.unit,
-      this.debt,
-      this.ask, });
+  ResidenceList({
+    Key? key,
+    required this.id,
+    required this.name,
+    required this.floor,
+    required this.block,
+    required this.unit,
+    this.debt,
+    this.ask,
+  });
   final String id;
   final String name;
   final String floor;
@@ -20,53 +21,60 @@ class ResidenceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.7,
-        child: Container(
-          height: 100,
-          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: const Color(0xff8cb0ff),
-          ),
+      height: 100,
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: const Color(0xff8cb0ff),
+      ),
+      child: Card(
+        color: const Color(0xff8cb0ff),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
           child: ListTile(
-            contentPadding: const EdgeInsets.all(5),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
+            title: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'بلوک: $block',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    'واحد: $unit',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    'طبقه: $floor',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+            leading: Column(
               children: [
                 Text(
-                  block,
-                  textDirection: TextDirection.rtl,
-                ),
-                Text(
-                  floor,
-                  textDirection: TextDirection.rtl,
-                ),
-                Text(
-                  unit,
-                  textDirection: TextDirection.rtl,
+                  'بدهی/ طلب',
                 ),
               ],
             ),
             trailing: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(name),
                 Container(
-                  margin: const EdgeInsets.only(left: 70),
+                  height: 30,
                   child: const CircleAvatar(
-                    backgroundColor: Color.fromRGBO(206, 221, 255, 1),
-                    child: Icon(
-                      Icons.person,
-                      color: Color.fromRGBO(64, 123, 255, 1),
-                    ),
-                  ),
+                      backgroundColor: Color.fromRGBO(206, 221, 255, 1),
+                      child: Icon(Icons.person,
+                          color: Color.fromRGBO(64, 123, 255, 1))),
                 ),
+                Text('$name'),
               ],
             ),
-            leading: Text('بدهی/طلب:' /* ${residence.debt} */),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
