@@ -26,17 +26,19 @@ class Unit extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            ListView.builder(
-                itemCount: residenceData.residenceList.length,
-                itemBuilder: (context, index) {
-                  ResidenceList(
-                    id: residenceData.residenceList[index].id,
-                    block: residenceData.residenceList[index].block,
-                    floor: residenceData.residenceList[index].floor,
-                    name: residenceData.residenceList[index].name,
-                    unit: residenceData.residenceList[index].unit,
-                  );
-                })
+            Expanded(
+              child: ListView.builder(
+                  itemCount: residenceData.residenceList.length,
+                  itemBuilder: (context, index) {
+                    ResidenceList(
+                      id: residenceData.residenceList[index].id,
+                      block: residenceData.residenceList[index].block,
+                      floor: residenceData.residenceList[index].floor,
+                      name: residenceData.residenceList[index].name,
+                      unit: residenceData.residenceList[index].unit,
+                    );
+                  }),
+            )
           ],
         ),
       ),
