@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Provider/Residence_provider.dart' as resModel;
+import '../Settings/Validator.dart';
 
 class ResidenceForm extends StatefulWidget {
   ResidenceForm({Key? key}) : super(key: key);
@@ -43,6 +44,7 @@ class _ResidenceFormState extends State<ResidenceForm> {
 
   @override
   Widget build(BuildContext context) {
+    final validphone = Provider.of<Setting>(context).validphoneNumber;
     return SingleChildScrollView(
       child: Container(
         child: Directionality(
@@ -158,6 +160,7 @@ class _ResidenceFormState extends State<ResidenceForm> {
                     ]),
                 const SizedBox(height: 15),
                 TextFormField(
+                  validator: validphone,
                   onSaved: (newValue) => _phoneController.text = newValue!,
                   keyboardType: TextInputType.number,
                   controller: _phoneController,

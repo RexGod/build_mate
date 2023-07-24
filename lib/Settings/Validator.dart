@@ -23,7 +23,7 @@ class Setting with ChangeNotifier {
       return 'حداقل شامل یک کارکتر خاص باشد';
     }
 
-    return null; // Return null if the password is valid
+    return null;
   }
 
   String? validateEmail(String? value) {
@@ -31,7 +31,6 @@ class Setting with ChangeNotifier {
       return 'لطفا ایمیل خود را وارد نمایید';
     }
 
-    // Regular expression pattern for email validation
     final emailRegex = RegExp(
       r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
     );
@@ -40,7 +39,7 @@ class Setting with ChangeNotifier {
       return 'لطفا ایمیل معتبر وارد کنید';
     }
 
-    return null; // Return null if the email is valid
+    return null;
   }
 
   String? validphoneNumber(String? value) {
@@ -52,6 +51,6 @@ class Setting with ChangeNotifier {
     if (!RegExp(iranPhoneRegex).hasMatch(value)) {
       return 'لطفا شماره معتبری وارد نمایید';
     }
-    return null; // Return null if the input is valid
+    return null;
   }
 }
