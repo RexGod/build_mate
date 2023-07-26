@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'Authenticate_screen/login_screen.dart';
 
 class Landing extends StatelessWidget {

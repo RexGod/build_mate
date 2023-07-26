@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Bill.dart';
 import 'Costs.dart';
-import '../Widgets/Residence.dart';
+
 import 'package:ionicons/ionicons.dart';
 
 import 'Unit.dart';

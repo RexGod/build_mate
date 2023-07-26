@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_util.dart';
+
 
 class ResidenceModel extends ChangeNotifier {
   String id;
@@ -37,11 +37,11 @@ class ResidenceProvider extends ChangeNotifier {
   Future<void> addResidence(String name, String block, String unit,
       String phone, String floor, String parking) async {
     try {
-      var uuid = Uuid();
+      var uuid = const Uuid();
 
       var id = uuid.v1();
 
-      final response = await supabase.from('residence').insert({
+      await supabase.from('residence').insert({
         'id': id,
         'block': block,
         'unit': unit,
