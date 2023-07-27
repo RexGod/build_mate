@@ -30,7 +30,7 @@ class _ResidenceFormState extends State<ResidenceForm> {
       return;
     } else {
       _formKey.currentState!.save();
-      Provider.of<resModel.ResidenceProvider>(context, listen: false)
+      await Provider.of<resModel.ResidenceProvider>(context, listen: false)
           .addResidence(
         _nameController.text,
         _blockController.text,
@@ -173,9 +173,18 @@ class _ResidenceFormState extends State<ResidenceForm> {
                 ),
                 const SizedBox(height: 5),
                 TextButton(
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      _submit();
+                    onPressed: () async {
+                      await _submit();
+                      final residenceProvider =
+                          Provider.of<resModel.ResidenceProvider>(context,
+                              listen: false);
+                      if (residenceProvider.status == 'ok') {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('با موفقیت انجام شد'),
+                            duration: Duration(seconds: 3)));
+                        FocusScope.of(context).unfocus();
+                        Navigator.pop(context);
+                      }
                     },
                     child: Container(
                       height: 45,

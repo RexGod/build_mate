@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
-
 class ResidenceModel extends ChangeNotifier {
   String id;
   String name;
@@ -11,6 +10,7 @@ class ResidenceModel extends ChangeNotifier {
   String block;
   String parking_numbers;
   String phone;
+
   String? debt;
   String? request;
 
@@ -28,6 +28,8 @@ class ResidenceModel extends ChangeNotifier {
 }
 
 class ResidenceProvider extends ChangeNotifier {
+  late String _status = '';
+  String get status => _status;
   SupabaseClient supabase = SupabaseClient(
       'https://vzlhnipbllxwusreekcb.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bGhuaXBibGx4d3VzcmVla2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzY5NTYsImV4cCI6MTk5NzkxMjk1Nn0.Sn9FWq3SB_wwV76niREsmrL9bBDzEsEPusVW-9TG3So');
@@ -36,12 +38,14 @@ class ResidenceProvider extends ChangeNotifier {
 
   Future<void> addResidence(String name, String block, String unit,
       String phone, String floor, String parking) async {
+    _status = '';
+    notifyListeners();
     try {
       var uuid = const Uuid();
 
       var id = uuid.v1();
 
-      await supabase.from('residence').insert({
+      final response = await supabase.from('residence').insert({
         'id': id,
         'block': block,
         'unit': unit,
@@ -49,7 +53,7 @@ class ResidenceProvider extends ChangeNotifier {
         'floor': floor,
         'name_of_Owner': name,
         'number_of_parking': parking
-      }).then((value) {
+      }).select(); /* then((value) {
         print('its ok');
         final newresidence = ResidenceModel(
             id: id,
@@ -59,8 +63,14 @@ class ResidenceProvider extends ChangeNotifier {
             block: block,
             parking_numbers: parking,
             phone: phone);
-        residencegp.add(newresidence);
-      });
+        _residencegp.add(newresidence);
+      }); */
+      if (response.isNotEmpty) {
+        _status = 'ok';
+        notifyListeners();
+      } else {
+        print('error accured');
+      }
     } catch (e) {
       print(e.toString());
     }
@@ -92,5 +102,10 @@ class ResidenceProvider extends ChangeNotifier {
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  Future<void> removeResidence(String byId) async {
+    await supabase.from('residence').delete().match({'id': byId});
+    notifyListeners();
   }
 }

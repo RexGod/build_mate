@@ -21,7 +21,8 @@ class _UnitState extends State<Unit> {
   @override
   Widget build(BuildContext context) {
     final residenceData = Provider.of<ResidenceProvider>(context);
-    Provider.of<ResidenceProvider>(context).fetchResidences();
+    final List<ResidenceModel> residences = residenceData.residencegp;
+    //Provider.of<ResidenceProvider>(context).fetchResidences();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -42,9 +43,9 @@ class _UnitState extends State<Unit> {
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.71,
                 child: ListView.builder(
-                    itemCount: residenceData.residencegp.length,
+                    itemCount: residences.length,
                     itemBuilder: (context, index) => ResidenceList(
-                          id: residenceData.residencegp[index].id,
+                          id: residences[index].id,
                           name: residenceData.residencegp[index].name,
                           floor: residenceData.residencegp[index].floor,
                           block: residenceData.residencegp[index].block,

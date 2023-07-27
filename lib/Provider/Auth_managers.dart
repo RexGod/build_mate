@@ -26,7 +26,7 @@ class Auth with ChangeNotifier {
       print('success registration');
     } catch (error) {
       if ('Connection reset by peer' == error.toString()) {
-        final response = await supabase.auth.signUp(
+        await supabase.auth.signUp(
           email: email,
           password: password,
         );
@@ -59,7 +59,7 @@ class Auth with ChangeNotifier {
     } catch (e) {
       // Handle other exceptions
       if ('Connection reset by peer' == e.toString()) {
-        final AuthResponse response = await supabase.auth.signInWithPassword(
+         await supabase.auth.signInWithPassword(
           email: email,
           password: password,
         );
