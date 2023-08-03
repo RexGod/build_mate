@@ -39,20 +39,27 @@ class _UnitState extends State<Unit> {
             const SizedBox(
               height: 30,
             ),
-            Flexible(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.71,
-                child: ListView.builder(
-                    itemCount: residences.length,
-                    itemBuilder: (context, index) => ResidenceList(
-                          id: residences[index].id,
-                          name: residenceData.residencegp[index].name,
-                          floor: residenceData.residencegp[index].floor,
-                          block: residenceData.residencegp[index].block,
-                          unit: residenceData.residencegp[index].unit,
-                        )),
-              ),
-            )
+            residences.length == 0
+                ? Container(
+                    margin: EdgeInsets.only(top: 250),
+                    child: Center(
+                      child: Text('ساکنی افزوده نشده'),
+                    ),
+                  )
+                : Flexible(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: ListView.builder(
+                          itemCount: residences.length,
+                          itemBuilder: (context, index) => ResidenceList(
+                                id: residences[index].id,
+                                name: residenceData.residencegp[index].name,
+                                floor: residenceData.residencegp[index].floor,
+                                block: residenceData.residencegp[index].block,
+                                unit: residenceData.residencegp[index].unit,
+                              )),
+                    ),
+                  )
           ],
         ),
       ),
