@@ -2,6 +2,7 @@ import 'package:build_mate/Widgets/costItem.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/appbar.dart';
+import '../Widgets/costBottomSheet.dart';
 
 class Cost extends StatelessWidget {
   const Cost({super.key});
@@ -14,6 +15,7 @@ class Cost extends StatelessWidget {
         appBarHeight: MediaQuery.of(context).size.height * 0.08,
       ),
       body: Container(
+        margin: EdgeInsets.only(bottom: 75),
         height: double.maxFinite,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,6 +57,24 @@ class Cost extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+              ),
+              context: context,
+              builder: (context) {
+                return BottomSheetContent();
+              },
+            );
+          },
+          child: Icon(Icons.add)),
     );
   }
 }
