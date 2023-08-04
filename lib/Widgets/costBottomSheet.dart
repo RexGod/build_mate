@@ -14,7 +14,6 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
       child: SingleChildScrollView(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -30,16 +29,13 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.05,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
               margin: const EdgeInsets.symmetric(horizontal: 15),
               decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 219, 215, 215),
-                  border:
-                      Border(right: BorderSide(color: Colors.blue, width: 4))),
+                color: Color.fromARGB(255, 219, 215, 215),
+              ),
               child: DropdownButton(
                 underline: Container(),
                 style: const TextStyle(
-            
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -52,51 +48,184 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                   });
                 },
                 elevation: 0,
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: 'Option 1',
-                    child: Text('قبض آب'),
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.blue,
+                          width: 3.5,
+                        ))),
+                        child: Text('قبض آب '),
+                        width: double.maxFinite,
+                      ),
+                    ),
                   ),
                   DropdownMenuItem(
-                      value: 'Option 2',
-                      child: Text(
-                        'قبض برق',
-                      )),
+                    value: 'Option 2',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.yellow,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'قبض برق',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                   DropdownMenuItem(
-                      value: 'Option 3',
-                      child: Text(
-                        'قبض گاز',
-                      )),
+                    value: 'Option 3',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.grey,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'قبض گاز',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                   DropdownMenuItem(
-                      value: 'Option 4',
-                      child: Text(
-                        'حقوق سرایدار',
-                      )),
+                    value: 'Option 4',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.blue,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'حقوق سرایدار',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                   DropdownMenuItem(
-                      value: 'Option 5',
-                      child: Text(
-                        'حقوق نگهبان',
-                      )),
+                    value: 'Option 5',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.black,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'حقوق نگهبان',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                   DropdownMenuItem(
-                      value: 'Option 6',
-                      child: Text(
-                        'تعمیرات آسانسور',
-                      )),
+                    value: 'Option 6',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.red,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'تعمیرات آسانسور',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                   DropdownMenuItem(
-                      value: 'Option 7',
-                      child: Text(
-                        'مواد شست و شو',
-                      )),
+                    value: 'Option 7',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.purple,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'مواد شست و شو',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                   DropdownMenuItem(
-                      value: 'Option 8',
-                      child: Text(
-                        'تاسیسات',
-                      )),
+                    value: 'Option 8',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.greenAccent,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'فضای سبز',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                   DropdownMenuItem(
-                      value: 'Option 9',
-                      child: Text(
-                        'موارد دیگر',
-                      )),
+                    value: 'Option 9',
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 350,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                          color: Colors.purple,
+                          width: 3.5,
+                        ))),
+                        child: Text(
+                          'موارد دیگر',
+                        ),
+                        width: double.maxFinite,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
