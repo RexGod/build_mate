@@ -1,4 +1,8 @@
+import 'package:build_mate/Model/costModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Provider/cost_Provider.dart';
 
 class BottomSheetContent extends StatefulWidget {
   @override
@@ -6,7 +10,26 @@ class BottomSheetContent extends StatefulWidget {
 }
 
 class _BottomSheetContentState extends State<BottomSheetContent> {
-  String _selectedOption = 'Option 1';
+  String? _selectedType;
+  TextEditingController _priceController = TextEditingController();
+
+  // List of available options for the DropdownButton
+  List<Map<String, dynamic>> _options = [
+    {'text': 'قبض آب', 'color': Colors.blue, 'value': 'قبض آب'},
+    {'text': 'قبض برق', 'color': Colors.yellow, 'value': 'قبض برق'},
+    {'text': 'قبض گاز', 'color': Colors.grey, 'value': 'قبض گاز'},
+    {'text': 'حقوق سرایدار', 'color': Colors.blue, 'value': 'حقوق سرایدار'},
+    {'text': 'حقوق نگهبان', 'color': Colors.black, 'value': 'حقوق نگهبان'},
+    {
+      'text': 'تعمیرات آسانسور',
+      'color': Colors.red,
+      'value': 'تعمیرات آسانسور'
+    },
+    {'text': 'مواد شست و شو', 'color': Colors.purple, 'value': 'مواد شست و شو'},
+    {'text': 'فضای سبز', 'color': Colors.greenAccent, 'value': 'فضای سبز'},
+    {'text': 'موارد دیگر', 'color': Colors.purple, 'value': 'موارد دیگر'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -41,198 +64,42 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                   color: Colors.black,
                 ),
                 isExpanded: true,
-                value: _selectedOption,
+                value: _selectedType,
                 onChanged: (newValue) {
                   setState(() {
-                    _selectedOption = newValue!;
+                    _selectedType = newValue as String?;
                   });
                 },
                 elevation: 0,
-                items: [
-                  DropdownMenuItem(
-                    value: 'Option 1',
+                items: _options.map<DropdownMenuItem<String>>((option) {
+                  return DropdownMenuItem<String>(
+                    value: option['value'],
                     child: Directionality(
                       textDirection: TextDirection.rtl,
                       child: Container(
                         height: 350,
                         decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.blue,
-                          width: 3.5,
-                        ))),
-                        child: Text('قبض آب '),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 2',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.yellow,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'قبض برق',
+                          border: Border(
+                            right: BorderSide(
+                              color: option['color'],
+                              width: 3.5,
+                            ),
+                          ),
                         ),
+                        child: Text(option['text'] as String),
                         width: double.maxFinite,
                       ),
                     ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 3',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.grey,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'قبض گاز',
-                        ),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 4',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.blue,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'حقوق سرایدار',
-                        ),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 5',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.black,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'حقوق نگهبان',
-                        ),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 6',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.red,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'تعمیرات آسانسور',
-                        ),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 7',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.purple,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'مواد شست و شو',
-                        ),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 8',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.greenAccent,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'فضای سبز',
-                        ),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Option 9',
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 350,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                          color: Colors.purple,
-                          width: 3.5,
-                        ))),
-                        child: Text(
-                          'موارد دیگر',
-                        ),
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                }).toList(),
               ),
             ),
             const SizedBox(height: 50.0),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                controller: _priceController,
+                onSaved: (newValue) => _priceController.text,
                 textAlign: TextAlign.center,
                 decoration: const InputDecoration(
                   labelText: 'مبلغ هزینه (تومان)',
@@ -246,6 +113,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                //controller: ,
                 textAlign: TextAlign.center,
                 decoration: const InputDecoration(
                   hintText: 'توضیحاتی بنویسید',
@@ -259,11 +127,17 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
             const SizedBox(height: 50.0),
             ElevatedButton(
               onPressed: () {
+                Provider.of<ProviderCost>(context, listen: false).InsertCost(CostModel( _priceController.text, _selectedType.toString())
+                );
                 Navigator.of(context).pop();
               },
               style: ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)))),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ),
               child: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Text(

@@ -1,6 +1,8 @@
 import 'package:build_mate/Widgets/costItem.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../Provider/cost_Provider.dart';
 import '../Widgets/appbar.dart';
 import '../Widgets/costBottomSheet.dart';
 
@@ -9,6 +11,8 @@ class Cost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProviderCost>(context, listen: false).fetchCostItem();
+
     return Scaffold(
       extendBody: true,
       appBar: CustomAppBar(
@@ -49,9 +53,15 @@ class Cost extends StatelessWidget {
               height: 20,
             ),
             Flexible(
-              child: ListView.builder(
-                itemBuilder: (context, index) => CostItem(),
-                itemCount: 7,
+              child: Consumer<ProviderCost>(
+                builder: (context, providerCost, _) {
+                  final List<dynamic> data =
+                      providerCost.costItems;
+                  return ListView.builder(
+                    itemBuilder: (context, index) => CostItem(data[index]),
+                    itemCount: data.length,
+                  );
+                },
               ),
             )
           ],
