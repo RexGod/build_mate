@@ -1,4 +1,5 @@
 import 'package:build_mate/Provider/Residence_provider.dart';
+import 'package:build_mate/Provider/cost_Provider.dart';
 import 'package:build_mate/Settings/Validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,8 @@ class MainApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: Auth()),
         ChangeNotifierProvider.value(value: Setting()),
-        ChangeNotifierProvider.value(value: ResidenceProvider())
+        ChangeNotifierProvider.value(value: ResidenceProvider()),
+        ChangeNotifierProvider.value(value: ProviderCost()),
       ],
       child: MaterialApp(
         home: Building(),
