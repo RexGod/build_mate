@@ -11,10 +11,10 @@ class BottomSheetContent extends StatefulWidget {
 
 class _BottomSheetContentState extends State<BottomSheetContent> {
   String? _selectedType;
-  TextEditingController _priceController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
 
   // List of available options for the DropdownButton
-  List<Map<String, dynamic>> _options = [
+  final List<Map<String, dynamic>> _options = [
     {'text': 'قبض آب', 'color': Colors.blue, 'value': 'قبض آب'},
     {'text': 'قبض برق', 'color': Colors.yellow, 'value': 'قبض برق'},
     {'text': 'قبض گاز', 'color': Colors.grey, 'value': 'قبض گاز'},
@@ -67,7 +67,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                 value: _selectedType,
                 onChanged: (newValue) {
                   setState(() {
-                    _selectedType = newValue as String?;
+                    _selectedType = newValue;
                   });
                 },
                 elevation: 0,
@@ -86,8 +86,8 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                             ),
                           ),
                         ),
-                        child: Text(option['text'] as String),
                         width: double.maxFinite,
+                        child: Text(option['text'] as String),
                       ),
                     ),
                   );
@@ -96,10 +96,11 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
             ),
             const SizedBox(height: 50.0),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                keyboardType: TextInputType.number,
                 controller: _priceController,
-                onSaved: (newValue) => _priceController.text,
+                onSaved: (newValue) => double.tryParse(_priceController.text),
                 textAlign: TextAlign.center,
                 decoration: const InputDecoration(
                   labelText: 'مبلغ هزینه (تومان)',
@@ -111,7 +112,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
             ),
             const SizedBox(height: 50.0),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
                 //controller: ,
                 textAlign: TextAlign.center,
@@ -127,8 +128,11 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
             const SizedBox(height: 50.0),
             ElevatedButton(
               onPressed: () {
-                Provider.of<ProviderCost>(context, listen: false).InsertCost(CostModel( _priceController.text, _selectedType.toString())
-                );
+                double priceValue =
+                    double.tryParse(_priceController.text) ?? 0.0;
+
+                Provider.of<ProviderCost>(context, listen: false).InsertCost(
+                    CostModel(priceValue, _selectedType.toString()));
                 Navigator.of(context).pop();
               },
               style: ButtonStyle(

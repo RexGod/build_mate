@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 import 'package:shamsi_date/shamsi_date.dart';
+
+import '../Provider/cost_Provider.dart';
+
+//import '../Provider/cost_Provider.dart';
 
 // ignore: must_be_immutable
 class CostItem extends StatelessWidget {
   dynamic costData;
   CostItem(this.costData, {Key? key});
-  String getDayOfWeekString(int dayOfWeek) {
-    switch (dayOfWeek) {
-      case 0:
-        return 'یک‌شنبه';
-      case 1:
-        return 'دو‌شنبه';
-      case 2:
-        return 'سه‌شنبه';
-      case 3:
-        return 'چهار‌شنبه';
-      case 4:
-        return 'پنج‌شنبه';
-      case 5:
-        return 'جمعه';
-      case 6:
-        return 'شنبه';
-      default:
-        return 'نامعلوم';
-    }
+
+  String format1(Date d) {
+    final f = d.formatter;
+
+    return '${f.d} ${f.mN} ${f.yyyy}';
+  }
+
+  String format2(Date d) {
+    final f = d.formatter;
+
+    return f.wN;
   }
 
   @override
   Widget build(BuildContext context) {
     final String type = costData['type'];
-    final String price = costData['price'];
+    final int price = costData['price'];
     final String dateString = costData['date'] as String;
+
     final DateTime date = DateTime.parse(dateString);
 
-    final String jalaliDate = Jalali.fromDateTime(date).toString();
-    final String day = costData['day'];
+    final Jalali jalaliDate = Jalali.fromDateTime(date);
 
+    final int id = costData['id'];
     final bool status = costData['status'];
     return Container(
       decoration: BoxDecoration(
@@ -73,7 +72,39 @@ class CostItem extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: AlertDialog(
+                              title: Text("حذف هزینه"),
+                              content: Text("آیا از حذف هزینه مطمئن هستید؟"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: Text("خیر"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Provider.of<ProviderCost>(context,
+                                            listen: false)
+                                        .deleteCostItem(id); // Delete the item
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: Text("بله"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                     icon: const Icon(Icons.delete_forever,
                         size: 35,
                         color: Colors.red), // Use red color for delete icon
@@ -101,7 +132,7 @@ class CostItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        price,
+                        '$price',
                         style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromRGBO(
@@ -128,13 +159,13 @@ class CostItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        jalaliDate,
+                        format1(jalaliDate),
                         style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black), // Use black for date
                       ),
                       Text(
-                        day,
+                        format2(jalaliDate),
                         style: const TextStyle(
                             fontSize: 14,
                             color: Color.fromRGBO(
