@@ -8,9 +8,10 @@ import '../Widgets/costBottomSheet.dart';
 
 class Cost extends StatelessWidget {
   const Cost({super.key});
-
+  static const routeName = 'Cost';
   @override
   Widget build(BuildContext context) {
+    
     Provider.of<ProviderCost>(context, listen: false).fetchCostItem();
     int totalPrice = Provider.of<ProviderCost>(context).total();
     return Scaffold(

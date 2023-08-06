@@ -1,40 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:provider/provider.dart';
-
 import 'package:shamsi_date/shamsi_date.dart';
-
 import '../Provider/cost_Provider.dart';
+import '../Screens/payScreen.dart';
 
-//import '../Provider/cost_Provider.dart';
-
-// ignore: must_be_immutable
 class CostItem extends StatelessWidget {
   dynamic costData;
   CostItem(this.costData, {Key? key});
 
-  String format1(Date d) {
-    final f = d.formatter;
-
-    return '${f.d} ${f.mN} ${f.yyyy}';
-  }
-
-  String format2(Date d) {
-    final f = d.formatter;
-
-    return f.wN;
-  }
-
   @override
   Widget build(BuildContext context) {
+    /* final Map<String, dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final bool status = arguments['status']; */
+    final dataUsage = Provider.of<ProviderCost>(context);
     final String type = costData['type'];
     final int price = costData['price'];
     final String dateString = costData['date'] as String;
-
     final DateTime date = DateTime.parse(dateString);
-
     final Jalali jalaliDate = Jalali.fromDateTime(date);
-
     final int id = costData['id'];
     final bool status = costData['status'];
     return Container(
@@ -159,13 +143,13 @@ class CostItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        format1(jalaliDate),
+                        dataUsage.format1(jalaliDate),
                         style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black), // Use black for date
                       ),
                       Text(
-                        format2(jalaliDate),
+                        dataUsage.format2(jalaliDate),
                         style: const TextStyle(
                             fontSize: 14,
                             color: Color.fromRGBO(
@@ -186,7 +170,16 @@ class CostItem extends StatelessWidget {
                               const Color.fromRGBO(63, 155, 242,
                                   1.0)), // Use green for button background
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            Payment.routeName,
+                            arguments: {
+                              'type': type,
+                              'price': price,
+                              'jalaliDate': jalaliDate
+                            },
+                          );
+                        },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(

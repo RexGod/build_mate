@@ -1,6 +1,7 @@
 import 'package:build_mate/Model/costModel.dart';
 
 import 'package:flutter/material.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 import 'package:uuid/uuid.dart';
 import 'package:supabase/supabase.dart';
 import 'package:intl/intl.dart';
@@ -64,5 +65,16 @@ class ProviderCost with ChangeNotifier {
     } catch (error) {
       print(error.toString());
     }
+  }
+  String format1(Date d) {
+    final f = d.formatter;
+
+    return '${f.d} ${f.mN} ${f.yyyy}';
+  }
+
+  String format2(Date d) {
+    final f = d.formatter;
+
+    return f.wN;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:build_mate/Provider/Residence_provider.dart';
 import 'package:build_mate/Provider/cost_Provider.dart';
+import 'package:build_mate/Screens/Costs.dart';
+import 'package:build_mate/Screens/payScreen.dart';
 import 'package:build_mate/Settings/Validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +32,8 @@ class MainApp extends StatelessWidget {
           Login.route_name: (context) => Login(),
           SignUp.route_name: (context) => SignUp(),
           Building.route_name: (context) => Building(),
+          Payment.routeName:(context) => Payment(),
+          Cost.routeName:(context) => Cost(),
         },
       ),
     );
