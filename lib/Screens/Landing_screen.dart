@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 import 'Authenticate_screen/login_screen.dart';
@@ -9,7 +11,7 @@ class Landing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(242, 242, 242, 1),
+      backgroundColor: const Color.fromRGBO(242, 242, 242, 1),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -48,7 +50,7 @@ class Landing extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 100),
+                margin: const EdgeInsets.only(top: 100),
                 width: 250,
                 height: 45,
                 decoration: BoxDecoration(

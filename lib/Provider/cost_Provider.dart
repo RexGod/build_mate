@@ -2,18 +2,17 @@ import 'package:build_mate/Model/costModel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shamsi_date/shamsi_date.dart';
-import 'package:uuid/uuid.dart';
+
 import 'package:supabase/supabase.dart';
 import 'package:intl/intl.dart';
 
-var iduuid = Uuid();
-var id = iduuid.v1();
 
 class ProviderCost with ChangeNotifier {
   SupabaseClient supabase = SupabaseClient(
       'https://vzlhnipbllxwusreekcb.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bGhuaXBibGx4d3VzcmVla2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzY5NTYsImV4cCI6MTk5NzkxMjk1Nn0.Sn9FWq3SB_wwV76niREsmrL9bBDzEsEPusVW-9TG3So');
 
+  // ignore: non_constant_identifier_names
   Future<void> InsertCost(
       /* String type, DateTime date, String price */ CostModel
           costModel) async {
@@ -31,8 +30,8 @@ class ProviderCost with ChangeNotifier {
         'day': dayOfWeek,
         /* 'id': id */
       });
+    // ignore: empty_catches
     } catch (error) {
-      print(error.toString());
     }
     notifyListeners();
   }
@@ -62,8 +61,8 @@ class ProviderCost with ChangeNotifier {
   Future<void> deleteCostItem(int id) async {
     try {
       await supabase.from('payment').delete().eq('id', id);
+    // ignore: empty_catches
     } catch (error) {
-      print(error.toString());
     }
   }
   String format1(Date d) {

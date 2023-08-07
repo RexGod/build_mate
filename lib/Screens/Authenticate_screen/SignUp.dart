@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Settings/Validator.dart';
@@ -8,6 +10,7 @@ import 'login_screen.dart';
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
+  // ignore: constant_identifier_names
   static const route_name = '/signup';
 
   @override

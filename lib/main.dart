@@ -15,6 +15,7 @@ Future<void> main() async {
   runApp(MainApp());
 }
 
+// ignore: use_key_in_widget_constructors
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -8,12 +8,14 @@ List<Manager> get managers => _managers;
 class Manager extends ChangeNotifier {
   final String id;
   final String name;
+  // ignore: non_constant_identifier_names
   final int phone_number;
   final String date;
 
   Manager({
     required this.id,
     required this.name,
+    // ignore: non_constant_identifier_names
     required this.phone_number,
     required this.date,
   });

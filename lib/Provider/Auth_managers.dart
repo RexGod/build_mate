@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/foundation.dart';
 
 import 'package:supabase/supabase.dart';
@@ -24,7 +25,6 @@ class Auth with ChangeNotifier {
 
       await supabase.from('Users').insert(
           {'id': _userId, 'email': email, 'password': password, 'name': name});
-      print('success registration');
     } catch (error) {
       if ('Connection reset by peer' == error.toString()) {
         await supabase.auth.signUp(
@@ -33,7 +33,6 @@ class Auth with ChangeNotifier {
         );
       }
       // Handle other exceptions
-      print('Error during registration: $error');
     }
   }
 
@@ -55,7 +54,6 @@ class Auth with ChangeNotifier {
         email: email,
         password: password,
       );
-      print('login good');
       _status = response.user!.emailConfirmedAt!;
     } catch (e) {
       // Handle other exceptions
@@ -66,7 +64,6 @@ class Auth with ChangeNotifier {
         );
       }
 
-      print('Error during login: $e');
     }
   }
 }

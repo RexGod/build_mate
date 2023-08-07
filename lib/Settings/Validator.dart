@@ -47,7 +47,7 @@ class Setting with ChangeNotifier {
       return 'لطفا شماره را وارد نمایید';
     }
 
-    final iranPhoneRegex = r'^09[0-9]{9}$|^0[1-9][0-9]{7}$';
+    const iranPhoneRegex = r'^09[0-9]{9}$|^0[1-9][0-9]{7}$';
     if (!RegExp(iranPhoneRegex).hasMatch(value)) {
       return 'لطفا شماره معتبری وارد نمایید';
     }
