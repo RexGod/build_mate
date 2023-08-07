@@ -77,4 +77,10 @@ class ProviderCost with ChangeNotifier {
 
     return f.wN;
   }
+  Future<void> updateStatus(int id , bool status) async {
+    await supabase.from('payment').update({'status' : true}).match({'id' : id});
+  }
+
+
+
 }

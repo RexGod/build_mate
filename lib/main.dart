@@ -28,12 +28,12 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         home: Building(),
         routes: {
-          Landing.route_name: (context) => Landing(),
-          Login.route_name: (context) => Login(),
-          SignUp.route_name: (context) => SignUp(),
+          Landing.route_name: (context) => const Landing(),
+          Login.route_name: (context) => const Login(),
+          SignUp.route_name: (context) => const SignUp(),
           Building.route_name: (context) => Building(),
-          Payment.routeName:(context) => Payment(),
-          Cost.routeName:(context) => Cost(),
+          Payment.routeName:(context) => const Payment(),
+          Cost.routeName:(context) => const Cost(),
         },
       ),
     );

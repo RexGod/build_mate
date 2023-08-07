@@ -4,8 +4,10 @@ import 'package:shamsi_date/shamsi_date.dart';
 import '../Provider/cost_Provider.dart';
 import '../Screens/payScreen.dart';
 
+// ignore: must_be_immutable
 class CostItem extends StatelessWidget {
   dynamic costData;
+  // ignore: use_key_in_widget_constructors
   CostItem(this.costData, {Key? key});
 
   @override
@@ -63,15 +65,15 @@ class CostItem extends StatelessWidget {
                           return Directionality(
                             textDirection: TextDirection.rtl,
                             child: AlertDialog(
-                              title: Text("حذف هزینه"),
-                              content: Text("آیا از حذف هزینه مطمئن هستید؟"),
+                              title: const Text("حذف هزینه"),
+                              content: const Text("آیا از حذف هزینه مطمئن هستید؟"),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context)
                                         .pop(); // Close the dialog
                                   },
-                                  child: Text("خیر"),
+                                  child: const Text("خیر"),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -81,7 +83,7 @@ class CostItem extends StatelessWidget {
                                     Navigator.of(context)
                                         .pop(); // Close the dialog
                                   },
-                                  child: Text("بله"),
+                                  child: const Text("بله"),
                                 ),
                               ],
                             ),
@@ -166,20 +168,29 @@ class CostItem extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(63, 155, 242,
-                                  1.0)), // Use green for button background
+                          backgroundColor: status == false
+                              ? MaterialStateProperty.all(
+                                  const Color.fromRGBO(63, 155, 242, 1.0))
+                              : MaterialStateProperty.all(const Color.fromARGB(
+                                  255,
+                                  63,
+                                  242,
+                                  132)), // Use green for button background
                         ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                            Payment.routeName,
-                            arguments: {
-                              'type': type,
-                              'price': price,
-                              'jalaliDate': jalaliDate
-                            },
-                          );
-                        },
+                        onPressed: status == false
+                            ? () {
+                                Navigator.of(context).pushNamed(
+                                  Payment.routeName,
+                                  arguments: {
+                                    'type': type,
+                                    'price': price,
+                                    'jalaliDate': jalaliDate,
+                                    'id': id,
+                                    'status': status,
+                                  },
+                                );
+                              }
+                            : () {},
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
@@ -194,11 +205,17 @@ class CostItem extends StatelessWidget {
                       ),
                       TextButton.icon(
                         onPressed: () {},
-                        icon: const Icon(
-                          Icons.cancel_outlined,
-                          color: Color.fromRGBO(
-                              0, 27, 114, 1.0), // Use blue for the icon
-                        ),
+                        icon: status == false
+                            ? const Icon(
+                                Icons.cancel_outlined,
+                                color: Color.fromRGBO(
+                                    0, 27, 114, 1.0), // Use blue for the icon
+                              )
+                            : const Icon(
+                                Icons.done_rounded,
+                                color: Color.fromRGBO(
+                                    0, 114, 57, 1), // Use blue for the icon
+                              ),
                         // ignore: unrelated_type_equality_checks
                         label: status == false
                             ? const Text(

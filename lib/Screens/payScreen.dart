@@ -18,6 +18,8 @@ class Payment extends StatelessWidget {
     final String type = arguments['type'];
     final int price = arguments['price'];
     final Jalali jalaliDate = arguments['jalaliDate'];
+    final int id = arguments['id'];
+    final bool status = arguments['status'];
     return Scaffold(
       appBar: CustomAppBar(
         appBarHeight: MediaQuery.of(context).size.height * 0.08,
@@ -102,6 +104,8 @@ class Payment extends StatelessWidget {
                           1.0)), // Use green for button background
                 ),
                 onPressed: () {
+                  Provider.of<ProviderCost>(context, listen: false)
+                      .updateStatus(id, status);
                   Navigator.of(context).pushNamed(Cost.routeName);
                 },
                 child: const Padding(
