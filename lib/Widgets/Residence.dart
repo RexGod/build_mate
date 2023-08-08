@@ -5,7 +5,7 @@ import '../Provider/Residence_provider.dart';
 // ignore: must_be_immutable
 class ResidenceList extends StatelessWidget {
   ResidenceList({
-    Key? key,
+    super.key,
     required this.id,
     required this.name,
     required this.floor,
