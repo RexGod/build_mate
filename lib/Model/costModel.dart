@@ -6,7 +6,7 @@ class CostModel {
   double price;
   late bool status;
   late String day;
-
+  late double remainPrice;
   CostModel(this.price, this.type) {
     status = false;
   }
