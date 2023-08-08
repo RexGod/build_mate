@@ -11,7 +11,6 @@ class Cost extends StatelessWidget {
   static const routeName = 'Cost';
   @override
   Widget build(BuildContext context) {
-    
     Provider.of<ProviderCost>(context, listen: false).fetchCostItem();
     int totalPrice = Provider.of<ProviderCost>(context).total();
     return Scaffold(
@@ -31,21 +30,24 @@ class Cost extends StatelessWidget {
               color: const Color.fromARGB(255, 131, 184, 234),
               height: MediaQuery.of(context).size.height * 0.06,
               child: Directionality(
-                //the const must be deleted after dynamic value
                 textDirection: TextDirection.rtl,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
+                child: ExpansionTile(
+                  title: ListTile(
+                    leading: const Text(
                       'جمع کل هزینه ها',
                       style:
                           TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                    trailing: Text(
                       '$totalPrice',
                       style: const TextStyle(
                           fontSize: 24, fontWeight: FontWeight.bold),
-                    )
+                    ),
+                  ),
+                  children: [
+                    ListTile(
+                      
+                    ),
                   ],
                 ),
               ),

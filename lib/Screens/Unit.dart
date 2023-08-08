@@ -77,13 +77,13 @@ class _UnitState extends State<Unit> {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              final screenHeight = MediaQuery.of(context).size.height;
-              final height = screenHeight * 0.8;
+              // final screenHeight = MediaQuery.of(context).size.height;
+              //final height = screenHeight * 0.8;
 
               return Container(
-                height: height,
+                // height: height,
                 margin: const EdgeInsets.all(15),
-                child: SingleChildScrollView(
+                child: const SingleChildScrollView(
                   child: ResidenceForm(),
                 ),
               );

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Settings/Validator.dart';
@@ -9,6 +11,7 @@ import 'SignUp.dart';
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
+  // ignore: constant_identifier_names
   static const route_name = '/login';
 
   @override
@@ -106,7 +109,7 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: [
                         // Other form fields can be added here
-                        Container(
+                        SizedBox(
                           width: 300,
                           child: Align(
                             alignment: AlignmentDirectional.centerEnd,

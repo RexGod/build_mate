@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'Bill.dart';

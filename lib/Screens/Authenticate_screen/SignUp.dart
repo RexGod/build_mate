@@ -105,7 +105,7 @@ class _SignUpState extends State<SignUp> {
                     child: Column(
                       children: [
                         // Other form fields can be added here
-                        Container(
+                        SizedBox(
                           width: 300,
                           child: Align(
                             alignment: AlignmentDirectional.centerEnd,
