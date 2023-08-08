@@ -13,6 +13,9 @@ class Cost extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<ProviderCost>(context, listen: false).fetchCostItem();
     int totalPrice = Provider.of<ProviderCost>(context).total();
+    int totalRemainingPrice =
+        Provider.of<ProviderCost>(context).totalRemainingPrice();
+    int totalPriceHasBeenPay = totalPrice - totalRemainingPrice;
     return Scaffold(
       extendBody: true,
       appBar: CustomAppBar(
@@ -25,10 +28,9 @@ class Cost extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 15),
+              margin: const EdgeInsets.only(top: 5),
               padding: const EdgeInsets.symmetric(horizontal: 10),
               color: const Color.fromARGB(255, 131, 184, 234),
-              height: MediaQuery.of(context).size.height * 0.06,
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: ExpansionTile(
@@ -46,7 +48,24 @@ class Cost extends StatelessWidget {
                   ),
                   children: [
                     ListTile(
-                      
+                      leading: const Text('هزینه باقی مانده کل',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      trailing: Text(
+                        '$totalRemainingPrice',
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Text('هزینه های انجام شده',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      trailing: Text(
+                        '$totalPriceHasBeenPay',
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),

@@ -57,7 +57,15 @@ class ProviderCost with ChangeNotifier {
     }
     return totalCost;
   }
-  
+  int totalRemainingPrice() {
+    int totalCost = 0;
+    for (var item in _costItems) {
+      int price = item['remainingPrice'];
+      totalCost += price;
+    }
+    return totalCost;
+  }
+
   Future<void> deleteCostItem(int id) async {
     try {
       await supabase.from('payment').delete().eq('id', id);
