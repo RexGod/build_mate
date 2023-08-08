@@ -15,9 +15,11 @@ class CostItem extends StatelessWidget {
     /* final Map<String, dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final bool status = arguments['status']; */
+    final format = Provider.of<ProviderCost>(context);
     final dataUsage = Provider.of<ProviderCost>(context);
     final String type = costData['type'];
-    final int price = costData['price'];
+    final int p = costData['price'];
+    final String price = format.formatCurrencyRial(p);
     final String dateString = costData['date'] as String;
     final DateTime date = DateTime.parse(dateString);
     final Jalali jalaliDate = Jalali.fromDateTime(date);

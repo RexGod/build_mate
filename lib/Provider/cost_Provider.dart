@@ -57,6 +57,7 @@ class ProviderCost with ChangeNotifier {
     }
     return totalCost;
   }
+
   int totalRemainingPrice() {
     int totalCost = 0;
     for (var item in _costItems) {
@@ -96,5 +97,14 @@ class ProviderCost with ChangeNotifier {
     await supabase
         .from('payment')
         .update({'remainingPrice': remainingPrice}).match({'id': id});
+  }
+
+  String formatCurrencyRial(int amount) {
+    final NumberFormat numberFormat = NumberFormat.currency(
+      locale: 'fa_IR',
+      symbol: '﷼',
+      decimalDigits: 0,
+    );
+    return numberFormat.format(amount);
   }
 }

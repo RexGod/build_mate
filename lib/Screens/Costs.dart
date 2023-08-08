@@ -30,11 +30,14 @@ class _CostState extends State<Cost> {
   @override
   Widget build(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
-
+    final format = Provider.of<ProviderCost>(context);
     int totalPrice = Provider.of<ProviderCost>(context).total();
     int totalRemainingPrice =
         Provider.of<ProviderCost>(context).totalRemainingPrice();
     int totalPriceHasBeenPay = totalPrice - totalRemainingPrice;
+    String total = format.formatCurrencyRial(totalPrice);
+    String remaining = format.formatCurrencyRial(totalRemainingPrice);
+    String mostePay = format.formatCurrencyRial(totalPriceHasBeenPay);
     return Scaffold(
       extendBody: true,
       appBar: CustomAppBar(
@@ -62,7 +65,7 @@ class _CostState extends State<Cost> {
                                 fontSize: 28, fontWeight: FontWeight.bold),
                           ),
                           trailing: Text(
-                            '$totalPrice',
+                            total,
                             style: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
@@ -73,7 +76,7 @@ class _CostState extends State<Cost> {
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                             trailing: Text(
-                              '$totalRemainingPrice',
+                              remaining,
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
@@ -83,7 +86,7 @@ class _CostState extends State<Cost> {
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                             trailing: Text(
-                              '$totalPriceHasBeenPay',
+                              mostePay,
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
