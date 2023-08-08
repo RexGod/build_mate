@@ -23,6 +23,7 @@ class CostItem extends StatelessWidget {
     final Jalali jalaliDate = Jalali.fromDateTime(date);
     final int id = costData['id'];
     final bool status = costData['status'];
+    final int remainingPrice = costData['remainingPrice'];
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -66,7 +67,8 @@ class CostItem extends StatelessWidget {
                             textDirection: TextDirection.rtl,
                             child: AlertDialog(
                               title: const Text("حذف هزینه"),
-                              content: const Text("آیا از حذف هزینه مطمئن هستید؟"),
+                              content:
+                                  const Text("آیا از حذف هزینه مطمئن هستید؟"),
                               actions: [
                                 TextButton(
                                   onPressed: () {
@@ -187,6 +189,7 @@ class CostItem extends StatelessWidget {
                                     'jalaliDate': jalaliDate,
                                     'id': id,
                                     'status': status,
+                                    'remainingPrice': remainingPrice,
                                   },
                                 );
                               }
@@ -218,9 +221,9 @@ class CostItem extends StatelessWidget {
                               ),
                         // ignore: unrelated_type_equality_checks
                         label: status == false
-                            ? const Text(
-                                'پرداخت نشده',
-                                style: TextStyle(
+                            ? Text(
+                                '$remainingPrice(تومان) پرداخت نشده',
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromRGBO(
