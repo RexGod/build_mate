@@ -25,7 +25,9 @@ class CostItem extends StatelessWidget {
     final Jalali jalaliDate = Jalali.fromDateTime(date);
     final int id = costData['id'];
     final bool status = costData['status'];
-    final int remainingPrice = costData['remainingPrice'];
+    final int remainingPriceint = costData['remainingPrice'];
+    final String remainingPrice = format.formatCurrencyRial(remainingPriceint);
+    
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -187,11 +189,11 @@ class CostItem extends StatelessWidget {
                                   Payment.routeName,
                                   arguments: {
                                     'type': type,
-                                    'price': price,
+                                    'price': p,
                                     'jalaliDate': jalaliDate,
                                     'id': id,
                                     'status': status,
-                                    'remainingPrice': remainingPrice,
+                                    'remainingPrice': remainingPriceint,
                                   },
                                 );
                               }

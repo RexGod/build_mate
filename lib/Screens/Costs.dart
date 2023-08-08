@@ -110,10 +110,13 @@ class _CostState extends State<Cost> {
                             ),
                           );
                         }
-                        return ListView.builder(
-                          itemBuilder: (context, index) =>
-                              CostItem(data[index]),
-                          itemCount: data.length,
+                        return RefreshIndicator(
+                          onRefresh: format.refresh,
+                          child: ListView.builder(
+                            itemBuilder: (context, index) =>
+                                CostItem(data[index]),
+                            itemCount: data.length,
+                          ),
                         );
                       },
                     ),

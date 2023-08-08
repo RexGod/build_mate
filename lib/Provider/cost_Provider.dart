@@ -102,9 +102,14 @@ class ProviderCost with ChangeNotifier {
   String formatCurrencyRial(int amount) {
     final NumberFormat numberFormat = NumberFormat.currency(
       locale: 'fa_IR',
-      symbol: '﷼',
+      symbol: '',
       decimalDigits: 0,
     );
     return numberFormat.format(amount);
+  }
+
+  Future<void> refresh() {
+    fetchCostItem();
+    return Future.delayed(const Duration(seconds: 2));
   }
 }
