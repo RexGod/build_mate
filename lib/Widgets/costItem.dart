@@ -12,9 +12,7 @@ class CostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /* final Map<String, dynamic> arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final bool status = arguments['status']; */
+   
     final format = Provider.of<ProviderCost>(context);
     final dataUsage = Provider.of<ProviderCost>(context);
     final String type = costData['type'];

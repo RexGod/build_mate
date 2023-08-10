@@ -1,6 +1,6 @@
 import 'package:build_mate/Provider/Residence_provider.dart';
 import 'package:build_mate/Provider/cost_Provider.dart';
-import 'package:build_mate/Screens/Costs.dart';
+import 'package:build_mate/Screens/main-pages/Costs.dart';
 import 'package:build_mate/Screens/payScreen.dart';
 import 'package:build_mate/Settings/Validator.dart';
 import 'package:flutter/material.dart';

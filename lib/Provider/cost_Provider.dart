@@ -23,9 +23,8 @@ class ProviderCost with ChangeNotifier {
         'date': formattedDate,
         'day': dayOfWeek,
         'remainingPrice': costModel.price
-        /* 'id': id */
       });
-      // ignore: empty_catches
+
     } catch (error) {
       print(error.toString());
     }

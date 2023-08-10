@@ -1,12 +1,13 @@
 // ignore_for_file: constant_identifier_names, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
-import 'Bill.dart';
-import 'Costs.dart';
+import '../Widgets/appbar.dart';
+import 'main-pages/Bill.dart';
+import 'main-pages/Costs.dart';
 
 import 'package:ionicons/ionicons.dart';
 
-import 'Unit.dart';
+import 'main-pages/Unit.dart';
 
 class Building extends StatefulWidget {
   Building({super.key});
@@ -32,6 +33,9 @@ class _BuildingState extends State<Building> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: CustomAppBar(
+          appBarHeight: MediaQuery.of(context).size.height * 0.08,
+        ),
         body: _pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             mouseCursor: SystemMouseCursors.click,

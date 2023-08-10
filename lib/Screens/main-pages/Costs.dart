@@ -2,9 +2,8 @@ import 'package:build_mate/Widgets/costItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Provider/cost_Provider.dart';
-import '../Widgets/appbar.dart';
-import '../Widgets/costBottomSheet.dart';
+import '../../Provider/cost_Provider.dart';
+import '../../Widgets/costBottomSheet.dart';
 
 class Cost extends StatefulWidget {
   const Cost({super.key});
@@ -40,9 +39,6 @@ class _CostState extends State<Cost> {
     String mostePay = format.formatCurrencyRial(totalPriceHasBeenPay);
     return Scaffold(
       extendBody: true,
-      appBar: CustomAppBar(
-        appBarHeight: MediaQuery.of(context).size.height * 0.08,
-      ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Container(

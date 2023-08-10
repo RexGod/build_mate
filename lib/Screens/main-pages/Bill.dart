@@ -5,8 +5,6 @@ class Bill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('bill'),),
-    );
+    return Scaffold();
   }
 }

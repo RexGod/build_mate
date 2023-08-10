@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, duplicate_ignore
 
+import 'package:build_mate/Model/ResidenceModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Provider/Residence_provider.dart' as resModel;
+import '../Provider/Residence_provider.dart';
 import '../Settings/Validator.dart';
 
 class ResidenceForm extends StatefulWidget {
@@ -32,14 +33,15 @@ class _ResidenceFormState extends State<ResidenceForm> {
       return;
     } else {
       _formKey.currentState!.save();
-      await Provider.of<resModel.ResidenceProvider>(context, listen: false)
-          .addResidence(
-        _nameController.text,
-        _blockController.text,
-        _unitController.text,
-        _phoneController.text,
-        _floorController.text,
-        _parkingController.text,
+      await Provider.of<ResidenceProvider>(context, listen: false).addResidence(
+        ResidenceModel(
+          _nameController.text,
+          _blockController.text,
+          _floorController.text,
+          int.parse(_parkingController.text),
+          int.parse(_unitController.text),
+          _phoneController.text,
+        ),
       );
     }
   }
@@ -48,7 +50,8 @@ class _ResidenceFormState extends State<ResidenceForm> {
   Widget build(BuildContext context) {
     final validphone = Provider.of<Setting>(context).validphoneNumber;
     return SingleChildScrollView(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Form(
@@ -92,8 +95,7 @@ class _ResidenceFormState extends State<ResidenceForm> {
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
                             borderSide: BorderSide(width: 1.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5))),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         labelText: 'واحد',
                       ),
                     ),
@@ -103,15 +105,13 @@ class _ResidenceFormState extends State<ResidenceForm> {
                   ),
                   Expanded(
                     child: TextFormField(
-                      onSaved: (newValue) =>
-                          _floorController.text = newValue!,
+                      onSaved: (newValue) => _floorController.text = newValue!,
                       controller: _floorController,
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
                             borderSide: BorderSide(width: 1.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5))),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         labelText: 'طبقه',
                       ),
                     ),
@@ -121,15 +121,13 @@ class _ResidenceFormState extends State<ResidenceForm> {
                   ),
                   Expanded(
                     child: TextFormField(
-                      onSaved: (newValue) =>
-                          _blockController.text = newValue!,
+                      onSaved: (newValue) => _blockController.text = newValue!,
                       controller: _blockController,
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
                             borderSide: BorderSide(width: 1.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5))),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         labelText: 'بلوک',
                       ),
                     ),
@@ -152,8 +150,7 @@ class _ResidenceFormState extends State<ResidenceForm> {
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderSide: BorderSide(width: 1.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5)),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
                           labelText: 'تعداد پارکینگ',
                         ),
@@ -179,8 +176,7 @@ class _ResidenceFormState extends State<ResidenceForm> {
                     await _submit();
                     final residenceProvider =
                         // ignore: use_build_context_synchronously
-                        Provider.of<resModel.ResidenceProvider>(context,
-                            listen: false);
+                        Provider.of<ResidenceProvider>(context, listen: false);
                     if (residenceProvider.status == 'ok') {
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
