@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../Widgets/appbar.dart';
+import '../Widgets/drawer.dart';
 import 'main-pages/Bill.dart';
 import 'main-pages/Costs.dart';
 
@@ -35,6 +36,11 @@ class _BuildingState extends State<Building> {
     return Scaffold(
         appBar: CustomAppBar(
           appBarHeight: MediaQuery.of(context).size.height * 0.08,
+        ),
+        drawer: Drawer(
+          width: MediaQuery.of(context).size.width * 0.6,
+          backgroundColor: Colors.blue,
+          child: drawerWidget(),
         ),
         body: _pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(

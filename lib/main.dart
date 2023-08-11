@@ -10,6 +10,7 @@ import 'Screens/Landing_screen.dart';
 import 'Provider/Auth_managers.dart';
 import 'Screens/Authenticate_screen/SignUp.dart';
 import 'Screens/Authenticate_screen/login_screen.dart';
+import 'Screens/charghNotife.dart';
 
 Future<void> main() async {
   runApp(MainApp());
@@ -33,8 +34,9 @@ class MainApp extends StatelessWidget {
           Login.route_name: (context) => const Login(),
           SignUp.route_name: (context) => const SignUp(),
           Building.route_name: (context) => Building(),
-          Payment.routeName:(context) => const Payment(),
-          Cost.routeName:(context) => const Cost(),
+          Payment.routeName: (context) => const Payment(),
+          Cost.routeName: (context) => const Cost(),
+          MultiStepForm.routeName: (context) => MultiStepForm(),
         },
       ),
     );
