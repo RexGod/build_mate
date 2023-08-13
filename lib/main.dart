@@ -1,4 +1,5 @@
 import 'package:build_mate/Provider/Residence_provider.dart';
+import 'package:build_mate/Provider/balance_Provider.dart';
 import 'package:build_mate/Provider/cost_Provider.dart';
 import 'package:build_mate/Screens/main-pages/Costs.dart';
 import 'package:build_mate/Screens/payScreen.dart';
@@ -10,6 +11,7 @@ import 'Screens/Landing_screen.dart';
 import 'Provider/Auth_managers.dart';
 import 'Screens/Authenticate_screen/SignUp.dart';
 import 'Screens/Authenticate_screen/login_screen.dart';
+import 'Screens/balance.dart';
 import 'Screens/charghNotife.dart';
 
 Future<void> main() async {
@@ -26,6 +28,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: Setting()),
         ChangeNotifierProvider.value(value: ResidenceProvider()),
         ChangeNotifierProvider.value(value: ProviderCost()),
+        ChangeNotifierProvider.value(value: ProviderBalance()),
       ],
       child: MaterialApp(
         home: Building(),
@@ -37,6 +40,7 @@ class MainApp extends StatelessWidget {
           Payment.routeName: (context) => const Payment(),
           Cost.routeName: (context) => const Cost(),
           MultiStepForm.routeName: (context) => MultiStepForm(),
+          BalanceScreen.routeName: (context) => BalanceScreen(),
         },
       ),
     );

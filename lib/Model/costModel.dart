@@ -1,5 +1,8 @@
 // ignore: file_names
+
+
 class CostModel {
+  
   late int id;
   String type;
   late DateTime date;

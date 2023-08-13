@@ -1,4 +1,5 @@
 import 'package:build_mate/Screens/Building_screen.dart';
+import 'package:build_mate/Screens/balance.dart';
 import 'package:build_mate/Screens/charghNotife.dart';
 import 'package:flutter/material.dart';
 
@@ -66,7 +67,10 @@ class drawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   leading: TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(BalanceScreen.routeName);
+                      },
                       icon: const Icon(
                         Icons.account_balance_wallet,
                         color: Colors.white,

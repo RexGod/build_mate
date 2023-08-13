@@ -1,7 +1,8 @@
+import 'package:build_mate/Model/balanceModel.dart';
+import 'package:build_mate/Provider/balance_Provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamsi_date/shamsi_date.dart';
-
 import '../Provider/cost_Provider.dart';
 import '../Widgets/appbar.dart';
 
@@ -26,6 +27,8 @@ class _PaymentState extends State<Payment> {
     final int id = arguments['id'];
     final bool status = arguments['status'];
     final int remainingPrice = arguments['remainingPrice'];
+    String balanceId = arguments['balance_id'];
+
     return Scaffold(
       appBar: CustomAppBar(
         appBarHeight: MediaQuery.of(context).size.height * 0.08,
@@ -118,6 +121,9 @@ class _PaymentState extends State<Payment> {
                   Provider.of<ProviderCost>(context, listen: false)
                       .updateprice(id, priceValue, remainingPrice.toDouble());
                   if (remainingPrice.toDouble() - priceValue == 0) {
+                    Provider.of<ProviderBalance>(context, listen: false)
+                        .addBalancecost(balanceModel(
+                            balanceId, price.toDouble(), 'sent', type));
                     Provider.of<ProviderCost>(context, listen: false)
                         .updateStatus(id, status);
                   }

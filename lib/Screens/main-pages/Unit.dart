@@ -21,9 +21,11 @@ class _UnitState extends State<Unit> {
     Provider.of<ResidenceProvider>(context, listen: false)
         .fetchResidences()
         .then((_) {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     });
   }
 
@@ -53,7 +55,8 @@ class _UnitState extends State<Unit> {
                   Flexible(
                     child: Consumer<ResidenceProvider>(
                       builder: (context, providerResicence, _) {
-                        final List<dynamic> data = providerResicence.residenceList;
+                        final List<dynamic> data =
+                            providerResicence.residenceList;
                         if (data.isEmpty) {
                           return const Center(
                             child: Text(

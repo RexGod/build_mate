@@ -12,7 +12,6 @@ class CostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     final format = Provider.of<ProviderCost>(context);
     final dataUsage = Provider.of<ProviderCost>(context);
     final String type = costData['type'];
@@ -25,7 +24,7 @@ class CostItem extends StatelessWidget {
     final bool status = costData['status'];
     final int remainingPriceint = costData['remainingPrice'];
     final String remainingPrice = format.formatCurrencyRial(remainingPriceint);
-    
+    String balanceId = costData['balance_id'];
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -192,6 +191,7 @@ class CostItem extends StatelessWidget {
                                     'id': id,
                                     'status': status,
                                     'remainingPrice': remainingPriceint,
+                                    'balance_id': balanceId
                                   },
                                 );
                               }
