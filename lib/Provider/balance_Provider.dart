@@ -1,6 +1,7 @@
 import 'package:build_mate/Model/balanceModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 import 'package:supabase/supabase.dart';
 
 class ProviderBalance with ChangeNotifier {
@@ -53,5 +54,10 @@ class ProviderBalance with ChangeNotifier {
   Future<void> refresh() {
     fetchBalanceItem();
     return Future.delayed(const Duration(seconds: 2));
+  }
+
+  String format1(Date d) {
+    final f = d.formatter;
+    return '${f.d} ${f.mN} ${f.yyyy}';
   }
 }
