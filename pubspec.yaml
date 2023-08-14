@@ -13,6 +13,7 @@ dependencies:
   intl: ^0.18.1
   ionicons: ^0.2.2
   line_icons: ^2.0.3
+  persian_datetime_picker: ^2.6.0
   provider: ^6.0.5
   shamsi_date: ^1.0.1
   supabase: ^1.9.5
