@@ -16,6 +16,7 @@ class ResidenceItems extends StatelessWidget {
     final int unit = residenceData['unit'];
     final int parking = residenceData['number_of_parking'];
     //final String status = residenceData['status'];
+     int debt = residenceData['Debt'];
     return Dismissible(
       key: UniqueKey(),
       background: Container(
@@ -147,7 +148,7 @@ class ResidenceItems extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold)),
                     const Text('وضعیت بدهی',
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    const Text('data'),
+                    Text('$debt'),
                   ],
                 ),
               ],
