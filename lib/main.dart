@@ -1,5 +1,6 @@
 import 'package:build_mate/Provider/Residence_provider.dart';
 import 'package:build_mate/Provider/balance_Provider.dart';
+import 'package:build_mate/Provider/chargh_provider.dart';
 import 'package:build_mate/Provider/cost_Provider.dart';
 import 'package:build_mate/Screens/main-pages/Costs.dart';
 import 'package:build_mate/Screens/payScreen.dart';
@@ -29,6 +30,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: ResidenceProvider()),
         ChangeNotifierProvider.value(value: ProviderCost()),
         ChangeNotifierProvider.value(value: ProviderBalance()),
+        ChangeNotifierProvider.value(value: ProviderChargh()),
       ],
       child: MaterialApp(
         home: Building(),
