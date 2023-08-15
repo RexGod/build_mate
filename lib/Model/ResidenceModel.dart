@@ -1,4 +1,5 @@
 class ResidenceModel {
+  late double debt;
   late int id;
   String name;
   String block;
