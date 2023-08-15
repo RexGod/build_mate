@@ -1,7 +1,11 @@
+import 'package:build_mate/Model/charghModel.dart';
+import 'package:build_mate/Provider/chargh_provider.dart';
 import 'package:build_mate/Widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:provider/provider.dart';
 
+import '../Provider/Residence_provider.dart';
 import '../Widgets/drawer.dart';
 
 class MultiStepForm extends StatefulWidget {
@@ -12,18 +16,19 @@ class MultiStepForm extends StatefulWidget {
 
 class _MultiStepFormState extends State<MultiStepForm> {
   String label = 'تعیین تاریخ';
-  Jalali? picked;
-  Jalali selectedDate = Jalali.fromDateTime(DateTime.now());
+  int _insertedChargeId = -1;
+
   bool _datePicked = false;
   int _currentStep = 0;
   final TextEditingController _titleController = TextEditingController();
-  TextEditingController textController4 = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+
   List<String> options = [];
   @override
   void initState() {
     super.initState();
     _titleController.addListener(updateStepValidations);
-    textController4.addListener(updateStepValidations);
+    _priceController.addListener(updateStepValidations);
   }
 
   void updateStepValidations() {
@@ -31,7 +36,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
       _stepValidations[0] = _titleController.text.isNotEmpty &&
           (_datePicked || label != 'تعیین تاریخ');
 
-      _stepValidations[1] = textController4.text.isNotEmpty;
+      _stepValidations[1] = _priceController.text.isNotEmpty;
       _stepValidations[2] = options.isNotEmpty;
     });
   }
@@ -40,9 +45,11 @@ class _MultiStepFormState extends State<MultiStepForm> {
     _stepValidations[0] =
         _titleController.text.isNotEmpty && label != 'تعیین تاریخ';
 
-    _stepValidations[1] = textController4.text.isNotEmpty;
+    _stepValidations[1] = _priceController.text.isNotEmpty;
     _stepValidations[2] = options.isNotEmpty;
   }
+
+  Jalali selectedDate = Jalali.fromDateTime(DateTime.now());
 
   List<Step> getSteps() => [
         Step(
@@ -84,10 +91,11 @@ class _MultiStepFormState extends State<MultiStepForm> {
                         );
                       },
                     );
-                    if (picked != null && picked != selectedDate) {
+                    if (picked != null) {
                       setState(() {
                         label = picked.formatShortDate();
                         _datePicked = true;
+                        selectedDate = picked;
                       });
                       updateStepValidations();
                     }
@@ -111,7 +119,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
               ),
 
               Container(
-                child: Text(label),
+                child: label.isEmpty ? Text('آخرین مهلت پرداخت') : Text(label),
               )
             ],
           ),
@@ -123,7 +131,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
           content: Column(
             children: [
               TextFormField(
-                controller: textController4,
+                controller: _priceController,
                 decoration: const InputDecoration(labelText: 'مبلغ شارژ'),
               ),
             ],
@@ -135,25 +143,15 @@ class _MultiStepFormState extends State<MultiStepForm> {
           isActive: _currentStep >= 2,
           content: Column(
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height *
-                    0.4, // Adjust the height as needed
-                child: ListView.builder(
-                  itemCount: options.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(options[index]),
-                    );
-                  },
-                ),
-              ),
-              ElevatedButton(
+              ElevatedButton.icon(
+                
                 onPressed: () {
-                  setState(() {
-                    options.add('Option ${options.length + 1}');
-                  });
+                 double newPrice = double.tryParse(_priceController.text) ?? 0.0;
+          Provider.of<ResidenceProvider>(context, listen: false)
+              .updateAllPrices(newPrice);
                 },
-                child: const Text('Add Option'),
+                icon: Icon(Icons.notification_add),
+                label: Text('اعلام شارژ'),
               ),
             ],
           ),
@@ -237,12 +235,30 @@ class _MultiStepFormState extends State<MultiStepForm> {
           type: StepperType.horizontal,
           steps: getSteps(),
           currentStep: _currentStep,
-          onStepContinue: () {
+          onStepContinue: () async {
             _submitForm();
             if (_stepValidations[_currentStep]) {
-              setState(() {
-                _currentStep += 1;
-              });
+              if (_currentStep == 0) {
+                final insertedId =
+                    await Provider.of<ProviderChargh>(context, listen: false)
+                        .insertChargh(charghModel(
+                            selectedDate.toDateTime(), _titleController.text));
+                if (insertedId >= 0) {
+                  setState(() {
+                    _insertedChargeId = insertedId;
+                    _currentStep += 1;
+                  });
+                } else {
+                  // Handle insert error
+                }
+              } else if (_currentStep == 1) {
+                double price = double.tryParse(_priceController.text) ?? 0.0;
+                Provider.of<ProviderChargh>(context, listen: false)
+                    .insertPrice(_insertedChargeId, price);
+                setState(() {
+                  _currentStep += 1;
+                });
+              }
             }
           },
           onStepCancel: () {

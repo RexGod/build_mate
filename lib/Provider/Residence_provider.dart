@@ -26,7 +26,7 @@ class ResidenceProvider extends ChangeNotifier {
         'phone_number': residence.phone,
         'floor': residence.floor,
         'name_of_Owner': residence.name,
-        'number_of_parking': residence.parking
+        'number_of_parking': residence.parking,
       }).select();
       if (response.isNotEmpty) {
         _status = 'ok';
@@ -45,7 +45,7 @@ class ResidenceProvider extends ChangeNotifier {
   Future<void> fetchResidences() async {
     try {
       final response = await supabase.from('residence').select(
-          '''name_of_Owner , block , unit , phone_number , number_of_parking , floor , id''');
+          '''name_of_Owner , block , unit , phone_number , number_of_parking , floor , id , Debt''');
       _residenceList = response;
 
       notifyListeners();
@@ -55,6 +55,7 @@ class ResidenceProvider extends ChangeNotifier {
   }
 
   List<dynamic> get residenceList => _residenceList;
+
   Future<void> removeResidence(String byId) async {
     await supabase.from('residence').delete().match({'id': byId});
     notifyListeners();
@@ -63,5 +64,13 @@ class ResidenceProvider extends ChangeNotifier {
   Future<void> refresh() {
     fetchResidences();
     return Future.delayed(const Duration(seconds: 2));
+  }
+
+  Future<void> updateAllPrices(double newPrice) async {
+    try {
+      await supabase.from('residence').update({'Debt': newPrice}).eq('Debt', 0);
+    } catch (error) {
+      print(error.toString());
+    }
   }
 }
