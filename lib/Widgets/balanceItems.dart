@@ -25,13 +25,6 @@ class balanceItems extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'تاریخچه تراکنش ها',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
           SizedBox(height: 8.0),
           ListTile(
             leading: Icon(
