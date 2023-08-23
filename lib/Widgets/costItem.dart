@@ -13,7 +13,7 @@ class CostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final format = Provider.of<ProviderCost>(context);
-    final dataUsage = Provider.of<ProviderCost>(context);
+    //final dataUsage = Provider.of<ProviderCost>(context);
     final String type = costData['type'];
     final int p = costData['price'];
     final String price = format.formatCurrencyRial(p);
@@ -148,13 +148,13 @@ class CostItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        dataUsage.format1(jalaliDate),
+                        format.format1(jalaliDate),
                         style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black), // Use black for date
                       ),
                       Text(
-                        dataUsage.format2(jalaliDate),
+                        format.format2(jalaliDate),
                         style: const TextStyle(
                             fontSize: 14,
                             color: Color.fromRGBO(
