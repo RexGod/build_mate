@@ -1,5 +1,6 @@
 import 'package:build_mate/Model/charghModel.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:supabase/supabase.dart';
 
 class ProviderChargh with ChangeNotifier {
@@ -23,5 +24,31 @@ class ProviderChargh with ChangeNotifier {
 
   Future<void> insertPrice(int id, double price) async {
     await supabase.from('chargh').update({'price': price}).match({'id': id});
+  }
+
+  List<dynamic> _charghItems = [];
+  Future<void> fetchChargh() async {
+    try {
+      final data = await supabase
+          .from('chargh')
+          .select('''id , name , deadLinetime , price''');
+      _charghItems = data;
+    } catch (e) {
+      print(e.toString());
+    }
+    notifyListeners();
+  }
+
+  List<dynamic> get charghItems => _charghItems;
+
+  Future<void> refresh() {
+    fetchChargh();
+    return Future.delayed(const Duration(seconds: 2));
+  }
+
+  String format1(Date d) {
+    final f = d.formatter;
+
+    return '${f.d} ${f.mN} ${f.yyyy}';
   }
 }
