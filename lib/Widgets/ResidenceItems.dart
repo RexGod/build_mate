@@ -16,7 +16,7 @@ class ResidenceItems extends StatelessWidget {
     final int unit = residenceData['unit'];
     final int parking = residenceData['number_of_parking'];
     //final String status = residenceData['status'];
-     int debt = residenceData['Debt'];
+    int debt = residenceData['Debt'];
     return Dismissible(
       key: UniqueKey(),
       background: Container(
