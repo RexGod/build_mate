@@ -101,8 +101,8 @@ class _MultiStepFormState extends State<MultiStepForm> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    // Background color of the button
-                    elevation: 4, // Elevation of the button
+             
+                    elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),

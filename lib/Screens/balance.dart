@@ -38,7 +38,7 @@ class _BalanceScreenState extends State<BalanceScreen> {
       drawer: Drawer(
         width: MediaQuery.of(context).size.width * 0.6,
         backgroundColor: Colors.blue,
-        child: drawerWidget(),
+        child: const drawerWidget(),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -55,17 +55,32 @@ class _BalanceScreenState extends State<BalanceScreen> {
                         if (data.isEmpty) {
                           return const Center(
                             child: Text(
-                              'هیچ تراکنشی ای اضافه نشده + لمس کنید',
+                              'هیچ تاریخچه ای اضافه نشده',
                               style: TextStyle(fontSize: 18),
                             ),
                           );
                         }
+
                         return RefreshIndicator(
                           onRefresh: format.refresh,
-                          child: ListView.builder(
-                            itemBuilder: (context, index) =>
-                                balanceItems(data[index]),
-                            itemCount: data.length,
+                          child: Column(
+                            children: [
+                              const Text(
+                                textAlign: TextAlign.right,
+                                'تاریخچه تراکنش ها',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) =>
+                                      balanceItems(data[index]),
+                                  itemCount: data.length,
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },
