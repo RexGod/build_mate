@@ -1,76 +1,84 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:supabase/supabase.dart';
-import 'package:uuid/uuid.dart';
-
+import 'package:http/http.dart' as http;
 import '../Model/ResidenceModel.dart';
 
 class ResidenceProvider extends ChangeNotifier {
-  late String _status = '';
-  String get status => _status;
-  SupabaseClient supabase = SupabaseClient(
-      'https://vzlhnipbllxwusreekcb.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bGhuaXBibGx4d3VzcmVla2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzY5NTYsImV4cCI6MTk5NzkxMjk1Nn0.Sn9FWq3SB_wwV76niREsmrL9bBDzEsEPusVW-9TG3So');
-
+  var url = Uri.https(
+      'build-mate-default-rtdb.europe-west1.firebasedatabase.app',
+      '/residence.json');
   Future<void> addResidence(ResidenceModel residence) async {
-    _status = '';
-    notifyListeners();
     try {
-      var uuid = const Uuid();
-
-      var id = uuid.v1();
-
-      final response = await supabase.from('residence').insert({
-        'id': id,
-        'block': residence.block,
-        'unit': residence.unit,
-        'phone_number': residence.phone,
-        'floor': residence.floor,
-        'name_of_Owner': residence.name,
-        'number_of_parking': residence.parking,
-      }).select();
-      if (response.isNotEmpty) {
-        _status = 'ok';
-        notifyListeners();
-      } else {
-        print('error accured');
-      }
-    } catch (e) {
-      print(e.toString());
+      final response = await http.post(url,
+          body: json.encode({
+            'block': residence.block,
+            'unit': residence.unit,
+            'phone_number': residence.phone,
+            'floor': residence.floor,
+            'name_of_Owner': residence.name,
+            'number_of_parking': residence.parking,
+          }));
+      final newResidence = ResidenceModel(
+          name: residence.name,
+          block: residence.block,
+          floor: residence.floor,
+          parking: residence.parking,
+          unit: residence.unit,
+          phone: residence.phone,
+          id: json.decode(response.body)['name']);
+      _residenceList.add(newResidence);
+    } catch (error) {
+      print(error.toString());
     }
     notifyListeners();
   }
 
-  List<dynamic> _residenceList = [];
+  List<ResidenceModel> _residenceList = [];
+
+  List<ResidenceModel> get residenceList {
+    return [..._residenceList];
+  }
 
   Future<void> fetchResidences() async {
     try {
-      final response = await supabase.from('residence').select(
-          '''name_of_Owner , block , unit , phone_number , number_of_parking , floor , id , Debt''');
-      _residenceList = response;
-
+      final response = await http.get(
+        url,
+      );
+      final extractData = json.decode(response.body) as Map<String, dynamic>;
+      List<dynamic> loadData = [];
+      extractData.forEach(
+        (key, value) {
+          loadData.add(ResidenceModel(
+              id:key,
+              name:value['name_of_Owner'],
+              block:value['block'],
+              floor:value['floor'],
+              parking:value['number_of_parking'],
+              unit:value['unit'],
+              phone:value['phone_number']));
+        },
+      );
       notifyListeners();
     } catch (e) {
       print('Error: $e');
     }
   }
 
-  List<dynamic> get residenceList => _residenceList;
-
-  Future<void> removeResidence(String byId) async {
+  /*  Future<void> removeResidence(String byId) async {
     await supabase.from('residence').delete().match({'id': byId});
     notifyListeners();
-  }
+  }*/
 
   Future<void> refresh() {
     fetchResidences();
     return Future.delayed(const Duration(seconds: 2));
   }
-
+/*
   Future<void> updateAllPrices(double newPrice) async {
     try {
       await supabase.from('residence').update({'Debt': newPrice}).eq('Debt', 0);
     } catch (error) {
       print(error.toString());
     }
-  }
+  } */
 }
