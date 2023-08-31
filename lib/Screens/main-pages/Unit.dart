@@ -60,7 +60,7 @@ class _UnitState extends State<Unit> {
                         if (data.isEmpty) {
                           return const Center(
                             child: Text(
-                              'هیچ هزینه ای اضافه نشده + لمس کنید',
+                              'هیچ ساکنی اضافه نشده + لمس کنید',
                               style: TextStyle(fontSize: 18),
                             ),
                           );
