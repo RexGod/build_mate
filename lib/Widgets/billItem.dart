@@ -1,4 +1,5 @@
 import 'package:build_mate/Provider/chargh_provider.dart';
+import 'package:build_mate/Screens/payChargh.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:provider/provider.dart';
@@ -14,26 +15,29 @@ class billItem extends StatelessWidget {
     final String dateString = billData['deadLinetime'] as String;
     final DateTime date = DateTime.parse(dateString);
     final Jalali jalaliDate = Jalali.fromDateTime(date);
+    final int charghId = billData['id'];
     return ListTile(
-      contentPadding: EdgeInsets.all(10), // Padding around each item
+      contentPadding: const EdgeInsets.all(10), // Padding around each item
       title: Text(
         billData['name'],
-        style: TextStyle(
-          fontSize: 18, // Adjust text size
-          fontWeight: FontWeight.bold, // Bold text
-          color: Colors.blue, // Text color
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.blue,
         ),
       ),
       subtitle: Text(
         dataUsage.format1(jalaliDate),
-        style: TextStyle(
-          fontSize: 14, // Adjust subtitle text size
-          color: Colors.grey, // Subtitle text color
+        style: const TextStyle(
+          fontSize: 14,
+          color: Colors.grey,
         ),
       ),
 
-      trailing: Icon(Icons.arrow_forward), // Trailing icon
-      onTap: () {},
+      trailing: const Icon(Icons.arrow_forward),
+      onTap: () {
+        Navigator.of(context).pushNamed(paychargh.route_Name , arguments: charghId);
+      },
     );
   }
 }

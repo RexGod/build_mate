@@ -67,25 +67,38 @@ class ResidenceProvider extends ChangeNotifier {
   }
 
   Future<void> updateAllPrices(double newPrice) async {
-  try {
-    final response = await supabase.from('residence').select("Debt");
+    try {
+      final response = await supabase.from('residence').select("Debt");
 
-    final currentDebts = response as List<dynamic>?;
+      final currentDebts = response as List<dynamic>?;
 
-    if (currentDebts != null) {
-      for (final debt in currentDebts) {
-        final currentDebt = debt['Debt'] ;
-        final updatedDebt = currentDebt + newPrice;
+      if (currentDebts != null) {
+        for (final debt in currentDebts) {
+          final currentDebt = debt['Debt'];
+          final updatedDebt = currentDebt + newPrice;
 
-        await supabase
-            .from('residence')
-            .update({'Debt': updatedDebt})
-            .eq('Debt', currentDebt); 
+          await supabase
+              .from('residence')
+              .update({'Debt': updatedDebt}).eq('Debt', currentDebt);
+        }
       }
+    } catch (error) {
+      print(error.toString());
     }
-  } catch (error) {
-    print(error.toString());
   }
-}
 
+  Future<void> updatedebt(String id, double newPrice) async {
+    // Fetch the current debt of the residence with the given ID.
+    final response =
+        await supabase.from('residence').select('Debt').eq('id', id).single();
+
+    final currentDebt = response['Debt'] as int; // Cast to int
+
+    // Calculate the updated debt (subtract the payment).
+    final updatedDebt =
+        currentDebt - newPrice.toInt(); // Cast newPrice to int if necessary
+
+    // Update the residence record with the new debt.
+    await supabase.from('residence').update({'Debt': updatedDebt}).eq('id', id);
+  }
 }

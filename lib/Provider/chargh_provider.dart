@@ -22,6 +22,14 @@ class ProviderChargh with ChangeNotifier {
     return -1; // Return a default value or handle errors appropriately
   }
 
+  Future<double> fetchPrice(int id) async {
+  final response =
+      await supabase.from('chargh').select('price').eq('id', id).single();
+  final price = response['price'] as int; 
+  return price.toDouble();
+}
+
+
   Future<void> insertPrice(int id, double price) async {
     await supabase.from('chargh').update({'price': price}).match({'id': id});
   }
