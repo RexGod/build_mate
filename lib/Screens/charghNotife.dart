@@ -1,5 +1,6 @@
 import 'package:build_mate/Model/charghModel.dart';
 import 'package:build_mate/Provider/chargh_provider.dart';
+import 'package:build_mate/Screens/Building_screen.dart';
 import 'package:build_mate/Widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
@@ -63,7 +64,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
                 decoration: const InputDecoration(labelText: 'عنوان'),
               ),
               //Date picker
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Container(
@@ -101,7 +102,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-             
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
@@ -110,7 +110,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
                   icon: const Icon(Icons.date_range),
                   label: Text(
                     label,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -119,7 +119,9 @@ class _MultiStepFormState extends State<MultiStepForm> {
               ),
 
               Container(
-                child: label.isEmpty ? Text('آخرین مهلت پرداخت') : Text(label),
+                child: label.isEmpty
+                    ? const Text('آخرین مهلت پرداخت')
+                    : Text(label),
               )
             ],
           ),
@@ -144,14 +146,16 @@ class _MultiStepFormState extends State<MultiStepForm> {
           content: Column(
             children: [
               ElevatedButton.icon(
-                
-                onPressed: () {
-                 double newPrice = double.tryParse(_priceController.text) ?? 0.0;
-          Provider.of<ResidenceProvider>(context, listen: false)
-              .updateAllPrices(newPrice);
+                onPressed: () async {
+                  double newPrice =
+                      double.tryParse(_priceController.text) ?? 0.0;
+                  await Provider.of<ResidenceProvider>(context, listen: false)
+                      .updateAllPrices(newPrice)
+                      .then((_) => Navigator.of(context)
+                          .popAndPushNamed(Building.route_name));
                 },
-                icon: Icon(Icons.notification_add),
-                label: Text('اعلام شارژ'),
+                icon: const Icon(Icons.notification_add),
+                label: const Text('اعلام شارژ'),
               ),
             ],
           ),
