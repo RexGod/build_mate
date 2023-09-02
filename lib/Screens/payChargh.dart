@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../Model/balanceModel.dart';
 import '../Provider/Residence_provider.dart';
+import '../Provider/balance_Provider.dart';
 import '../Provider/chargh_provider.dart';
 
 class paychargh extends StatelessWidget {
@@ -10,8 +11,10 @@ class paychargh extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final residence_data = Provider.of<ResidenceProvider>(context);
-    final int chargh_id = ModalRoute.of(context)!.settings.arguments as int;
-
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int chargh_id = arguments['chargh_id'];
+    final String balance_id = arguments['balance_id'];
     return Scaffold(
       appBar: AppBar(
         title: Text('Resident List'),
@@ -20,15 +23,11 @@ class paychargh extends StatelessWidget {
         future: Provider.of<ProviderChargh>(context).fetchPrice(chargh_id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            // While waiting for data, you can display a loading indicator.
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            // If there's an error, display an error message.
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            // Data has been loaded successfully.
             final double price = snapshot.data ?? 0.0;
-
             return GridView.builder(
               itemCount: residence_data.residenceList.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -39,7 +38,6 @@ class paychargh extends StatelessWidget {
                 final String name = resident['name_of_Owner'];
                 final int unit = resident['unit'];
                 final String id = resident['id'];
-
                 return Card(
                   margin: EdgeInsets.all(10),
                   child: Column(
@@ -55,8 +53,16 @@ class paychargh extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Provider.of<ResidenceProvider>(context, listen: false)
-                              .updatedebt(id, price);
+                          try {
+                            Provider.of<ResidenceProvider>(context,
+                                    listen: false)
+                                .updatedebt(id, price);
+                            Provider.of<ProviderBalance>(context, listen: false)
+                                .addBalancecost(balanceModel(balance_id,
+                                    price.toDouble(), 'sent', name));
+                          } catch (error) {
+                            rethrow;
+                          }
                         },
                         child: Text('Pay'),
                       ),

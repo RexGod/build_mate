@@ -27,13 +27,18 @@ class balanceItems extends StatelessWidget {
         children: [
           SizedBox(height: 8.0),
           ListTile(
-            leading: Icon(
-              Icons.arrow_upward,
-              color: Colors.green,
-            ),
+            leading: type == 'sent'
+                ? Icon(
+                    Icons.arrow_upward,
+                    color: Colors.green,
+                  )
+                : Icon(
+                    Icons.arrow_downward,
+                    color: Color.fromARGB(255, 185, 77, 77),
+                  ),
             title: type == 'sent'
-                ? Text('برداشت $price از صندوق برای $name')
-                : Text('واریز $price از آقای حسینی'),
+                ? Text('واریز $price از صندوق برای $name')
+                : Text('برداشت $price از صندوق برای $name'),
             subtitle: Text('$jalaliDate'),
           ),
         ],

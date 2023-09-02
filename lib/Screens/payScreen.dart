@@ -123,7 +123,7 @@ class _PaymentState extends State<Payment> {
                   if (remainingPrice.toDouble() - priceValue == 0) {
                     Provider.of<ProviderBalance>(context, listen: false)
                         .addBalancecost(balanceModel(
-                            balanceId, price.toDouble(), 'sent', type));
+                            balanceId, price.toDouble(), 'recive', type));
                     Provider.of<ProviderCost>(context, listen: false)
                         .updateStatus(id, status);
                   }

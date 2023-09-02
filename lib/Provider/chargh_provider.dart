@@ -2,16 +2,19 @@ import 'package:build_mate/Model/charghModel.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:supabase/supabase.dart';
+import 'package:uuid/uuid.dart';
 
 class ProviderChargh with ChangeNotifier {
   SupabaseClient supabase = SupabaseClient(
       'https://vzlhnipbllxwusreekcb.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bGhuaXBibGx4d3VzcmVla2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzY5NTYsImV4cCI6MTk5NzkxMjk1Nn0.Sn9FWq3SB_wwV76niREsmrL9bBDzEsEPusVW-9TG3So');
   Future<int> insertChargh(charghModel chargh) async {
+    var balanceId = const Uuid().v1();
     try {
       final response = await supabase.from('chargh').insert({
         'name': chargh.name,
         'deadLinetime': chargh.deadLine.toUtc().toIso8601String(),
+        'balance_id' : balanceId
       }).select('id');
       if (response != null) {
         return response[0]['id'] as int;
@@ -39,7 +42,7 @@ class ProviderChargh with ChangeNotifier {
     try {
       final data = await supabase
           .from('chargh')
-          .select('''id , name , deadLinetime , price''');
+          .select('''id , name , deadLinetime , price, balance_id''');
       _charghItems = data;
     } catch (e) {
       print(e.toString());

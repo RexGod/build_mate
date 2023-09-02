@@ -37,21 +37,6 @@ class ProviderCost with ChangeNotifier {
       final response = await supabase.from('payment').select(
           '''id , price, day, date, status, type , remainingPrice , balance_id''');
       _costItems = response;
-/* 
-      if (response != null &&
-          response.isNotEmpty &&
-          response['status'] == true) {
-        print('hello');
-        await supabase.from('balance').insert({
-          'id': response['balance_id'],
-          'type': 'sent',
-          'price': response['price'],
-          'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-          'name': response['type'],
-        });
-      } else {
-        print('No UUID value found in response');
-      } */
     } catch (error) {
       print(error.toString());
     }

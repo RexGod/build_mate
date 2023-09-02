@@ -16,6 +16,7 @@ class billItem extends StatelessWidget {
     final DateTime date = DateTime.parse(dateString);
     final Jalali jalaliDate = Jalali.fromDateTime(date);
     final int charghId = billData['id'];
+    String balanceId = billData['balance_id'];
     return ListTile(
       contentPadding: const EdgeInsets.all(10), // Padding around each item
       title: Text(
@@ -36,7 +37,8 @@ class billItem extends StatelessWidget {
 
       trailing: const Icon(Icons.arrow_forward),
       onTap: () {
-        Navigator.of(context).pushNamed(paychargh.route_Name , arguments: charghId);
+        Navigator.of(context)
+            .pushNamed(paychargh.route_Name, arguments: {'chargh_id':charghId , 'balance_id': balanceId});
       },
     );
   }
