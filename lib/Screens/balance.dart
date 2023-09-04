@@ -93,32 +93,38 @@ class _BalanceScreenState extends State<BalanceScreen> {
   }
 
   Widget _buildAccountInfoCard(BuildContext context) {
+    final providerBalance = Provider.of<ProviderBalance>(context);
+    final remainPrice = providerBalance
+        .calculateBalanceRemaining(); // Use calculateBalanceRemaining method
+
     return Container(
       color: Colors.blue,
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.1,
-      child: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'مانده صندوق',
-              style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              'تومان900,000', // Replace with actual balance
-              style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'مانده صندوق',
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                '$remainPrice', // Display the calculated balance
+                style: const TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );

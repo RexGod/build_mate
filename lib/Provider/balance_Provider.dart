@@ -25,6 +25,24 @@ class ProviderBalance with ChangeNotifier {
     }
   }
 
+  double calculateBalanceRemaining() {
+  double balance = 0;
+
+  for (var item in _balanceItem) {
+    double price = (item['price'] as int).toDouble();
+    String type = item['type'] as String;
+
+    if (type == 'recive') {
+      balance -= price;
+    } else if (type == 'sent') {
+      balance += price;
+    }
+  }
+  
+  return balance;
+}
+
+
   List<dynamic> _balanceItem = [];
 
   Future<void> fetchBalanceItem() async {
