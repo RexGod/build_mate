@@ -94,9 +94,8 @@ class _BalanceScreenState extends State<BalanceScreen> {
 
   Widget _buildAccountInfoCard(BuildContext context) {
     final providerBalance = Provider.of<ProviderBalance>(context);
-    final remainPrice = providerBalance
-        .calculateBalanceRemaining(); // Use calculateBalanceRemaining method
-
+    final remainPricetemp = providerBalance.calculateBalanceRemaining();
+    final remainPrice = providerBalance.formatCurrencyRial(remainPricetemp);
     return Container(
       color: Colors.blue,
       width: double.infinity,
@@ -117,7 +116,7 @@ class _BalanceScreenState extends State<BalanceScreen> {
               ),
               const SizedBox(height: 8.0),
               Text(
-                '$remainPrice', // Display the calculated balance
+                '$remainPrice تومان', // Display the calculated balance
                 style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,

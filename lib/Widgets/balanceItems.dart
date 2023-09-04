@@ -16,10 +16,9 @@ class balanceItems extends StatelessWidget {
     final String type = balanceData['type'];
     final int p = balanceData['price'];
     final String price = format.formatCurrencyRial(p);
-    final String dateString = balanceData['date'] as String;
-    final DateTime date = DateTime.parse(dateString);
+    //final String dateString =  as String;
+    final DateTime date = DateTime.parse(balanceData['date']);
     final Jalali jalaliDate = Jalali.fromDateTime(date);
-    // Replace this with a ListView.builder to show transaction history
     return Padding(
       padding: EdgeInsets.all(20.0),
       child: Column(
@@ -37,9 +36,9 @@ class balanceItems extends StatelessWidget {
                     color: Color.fromARGB(255, 185, 77, 77),
                   ),
             title: type == 'sent'
-                ? Text('واریز $price از صندوق برای $name')
+                ? Text('واریز $price به صندوق توسط $name')
                 : Text('برداشت $price از صندوق برای $name'),
-            subtitle: Text('$jalaliDate'),
+            subtitle: Text(format.format1(jalaliDate)),
           ),
         ],
       ),

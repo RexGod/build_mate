@@ -25,11 +25,11 @@ class ProviderBalance with ChangeNotifier {
     }
   }
 
-  double calculateBalanceRemaining() {
-  double balance = 0;
+  int calculateBalanceRemaining() {
+  int balance = 0;
 
   for (var item in _balanceItem) {
-    double price = (item['price'] as int).toDouble();
+    int price = (item['price']);
     String type = item['type'] as String;
 
     if (type == 'recive') {
@@ -77,5 +77,13 @@ class ProviderBalance with ChangeNotifier {
   String format1(Date d) {
     final f = d.formatter;
     return '${f.d} ${f.mN} ${f.yyyy}';
+  }
+  String formatCurrencyRial(int amount) {
+    final NumberFormat numberFormat = NumberFormat.currency(
+      locale: 'fa_IR',
+      symbol: '',
+      decimalDigits: 0,
+    );
+    return numberFormat.format(amount);
   }
 }

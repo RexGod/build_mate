@@ -26,7 +26,7 @@ class _PaymentState extends State<Payment> {
     final Jalali jalaliDate = arguments['jalaliDate'];
     final int id = arguments['id'];
     final bool status = arguments['status'];
-    final int remainingPrice = arguments['remainingPrice'];
+    final int remainingPricecost = arguments['remainingPrice'];
     String balanceId = arguments['balance_id'];
 
     return Scaffold(
@@ -105,25 +105,46 @@ class _PaymentState extends State<Payment> {
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  shape: MaterialStatePropertyAll(
+                  shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(63, 155, 242,
-                          1.0)), // Use green for button background
+                    const Color.fromRGBO(63, 155, 242, 1.0),
+                  ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   double priceValue =
                       double.tryParse(_priceController.text) ?? 0.0;
 
-                  Provider.of<ProviderCost>(context, listen: false)
-                      .updateprice(id, priceValue, remainingPrice.toDouble());
-                  if (remainingPrice.toDouble() - priceValue == 0) {
+                  // Get the current remaining balance from ProviderBalance
+                  final providerBalance =
+                      Provider.of<ProviderBalance>(context, listen: false);
+                  int remainingPrice =
+                      providerBalance.calculateBalanceRemaining();
+
+                  // Check if subtracting the priceValue results in a negative remaining balance
+                  if (remainingPrice - priceValue < 0) {
+                    final snackBar = SnackBar(
+                      dismissDirection: DismissDirection.down,
+                      duration: Duration(seconds: 3),
+                      backgroundColor: Colors.red,
+                      content: Text("مبلغ وارد شده باقیمانده را منفی می‌کند."),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    return;
+                  }
+
+                  // Proceed with the update
+                  Provider.of<ProviderCost>(context, listen: false).updateprice(
+                      context, id, priceValue, remainingPricecost.toDouble());
+
+                  if (remainingPricecost.toDouble() - priceValue == 0) {
                     Provider.of<ProviderBalance>(context, listen: false)
-                        .addBalancecost(balanceModel(
-                            balanceId, price.toDouble(), 'recive', type));
+                        .addBalancecost(
+                      balanceModel(balanceId, price.toDouble(), 'recive', type),
+                    );
                     Provider.of<ProviderCost>(context, listen: false)
                         .updateStatus(id, status);
                   }
@@ -136,11 +157,11 @@ class _PaymentState extends State<Payment> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white, // Use white for button text
+                      color: Colors.white,
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

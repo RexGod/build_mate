@@ -89,7 +89,18 @@ class ProviderCost with ChangeNotifier {
     await supabase.from('payment').update({'status': true}).match({'id': id});
   }
 
-  Future<void> updateprice(int id, double price, double remainingPrice) async {
+  Future<void> updateprice(
+      BuildContext context, int id, double price, double remainingPrice) async {
+    if (remainingPrice - price < 0) {
+      final snackBar = SnackBar(
+        dismissDirection: DismissDirection.down,
+        duration: Duration(seconds: 3),
+        backgroundColor: Colors.red,
+        content: Text("مبلغ وارد شده درست نیست دوباره تلاش کنید"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
     remainingPrice = remainingPrice - price;
     await supabase
         .from('payment')
