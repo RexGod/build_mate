@@ -34,10 +34,11 @@ class paychargh extends StatelessWidget {
                 crossAxisCount: 2,
               ),
               itemBuilder: (context, index) {
-                final resident = residence_data.residenceList[index];
-                final String name = resident['name_of_Owner'];
-                final int unit = resident['unit'];
-                final String id = resident['id'];
+                final residence = residence_data.residenceList[index];
+                final String name = residence['name_of_Owner'];
+                final int unit = residence['unit'];
+                final String id = residence['id'];
+                final int debt = residence['Debt'];
                 return Card(
                   margin: EdgeInsets.all(10),
                   child: Column(
@@ -65,6 +66,13 @@ class paychargh extends StatelessWidget {
                           }
                         },
                         child: Text('Pay'),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'هزینه شارژ $debt',
+                        style: TextStyle(fontSize: 20),
                       ),
                     ],
                   ),

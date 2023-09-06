@@ -9,6 +9,7 @@ class ResidenceModel {
   late String status;
   late String price;
   String phone; 
+  bool isDisabled;
   ResidenceModel(this.name, this.block, this.floor,
-      this.parking, this.unit , this.phone);
+      this.parking, this.unit , this.phone,{this.isDisabled=false});
 }

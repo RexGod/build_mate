@@ -1,7 +1,11 @@
 import 'package:build_mate/Screens/Building_screen.dart';
+import 'package:build_mate/Screens/Landing_screen.dart';
 import 'package:build_mate/Screens/balance.dart';
 import 'package:build_mate/Screens/charghNotife.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Provider/Auth_managers.dart';
 
 class drawerWidget extends StatelessWidget {
   const drawerWidget({super.key});
@@ -86,7 +90,10 @@ class drawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   leading: TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Provider.of<Auth>(context, listen: false).logOut();
+                        Navigator.of(context).pushReplacementNamed(Landing.route_name);
+                      },
                       icon: const Icon(
                         Icons.logout,
                         color: Colors.red,

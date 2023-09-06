@@ -36,7 +36,7 @@ class _SignUpState extends State<SignUp> {
     }
     _formKey.currentState!.save();
     final isemailExist = Provider.of<Auth>(context, listen: false)
-        .isEmailInList(_authData['email']!);
+        .isPasswordCorrected(_authData['email']!, _authData['password']!);
     if (await isemailExist) {
       //Navigator.pushReplacementNamed(context, Building.route_name);
     } else {
@@ -78,8 +78,8 @@ class _SignUpState extends State<SignUp> {
                         width: 100,
                       ),
                       SizedBox(
-                        height: 80,
-                        width: 80,
+                        height: 100,
+                        width: 220,
                         child: Image.asset(
                           'lib/assets/Logo.png',
                           height: 80,
@@ -173,10 +173,6 @@ class _SignUpState extends State<SignUp> {
                                   onSaved: (value) {
                                     _authData['password'] = value!;
                                   },
-                                  onChanged: (value) {
-                                    // Phone number formatting logic goes here (if needed)
-                                    // For example, you can format the phone number as the user types it
-                                  },
                                 ),
                               ],
                             ),
@@ -196,7 +192,7 @@ class _SignUpState extends State<SignUp> {
                             onPressed: () {
                               _submit();
                               FocusScope.of(context).unfocus();
-                              //Navigator.pushNamed(context, Building.route_name);
+                              //Navigator.pushNamed(context, Login.route_name);
                             },
                             child: const Text(
                               'ثبت نام',

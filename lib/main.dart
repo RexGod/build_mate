@@ -14,6 +14,7 @@ import 'Screens/Authenticate_screen/SignUp.dart';
 import 'Screens/Authenticate_screen/login_screen.dart';
 import 'Screens/balance.dart';
 import 'Screens/charghNotife.dart';
+import 'Screens/payChargh.dart';
 
 Future<void> main() async {
   runApp(MainApp());
@@ -33,7 +34,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: ProviderChargh()),
       ],
       child: MaterialApp(
-        home: Building(),
+        home: const Landing(),
         routes: {
           Landing.route_name: (context) => const Landing(),
           Login.route_name: (context) => const Login(),
@@ -43,6 +44,7 @@ class MainApp extends StatelessWidget {
           Cost.routeName: (context) => const Cost(),
           MultiStepForm.routeName: (context) => MultiStepForm(),
           BalanceScreen.routeName: (context) => BalanceScreen(),
+          paychargh.route_Name: (context) => paychargh(),
         },
       ),
     );
